@@ -43,12 +43,13 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, String email, String dni, String passwordHash, Role rol) {
+    public Usuario(String nombre, String apellido, String email, String dni, String passwordHash, String telefono, Role rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.dni = dni;
         this.passwordHash = passwordHash;
+        this.telefono= telefono;
         this.rol = rol;
         this.fechaAlta = LocalDateTime.now();
         this.estado = EstadoUsuario.ACTIVO;
