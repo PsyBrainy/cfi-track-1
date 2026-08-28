@@ -2,8 +2,6 @@ package com.alkywall.backend.security.controllers;
 
 import com.alkywall.backend.security.controllers.DTOs.LoginRequestDTO;
 import com.alkywall.backend.security.controllers.DTOs.LoginResponseDTO;
-import com.alkywall.backend.security.controllers.DTOs.RegisterRequestDTO;
-import com.alkywall.backend.security.controllers.DTOs.RegisterResponseDTO;
 import com.alkywall.backend.security.services.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 

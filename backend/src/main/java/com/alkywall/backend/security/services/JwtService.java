@@ -1,5 +1,6 @@
 package com.alkywall.backend.security.services;
 
+import com.alkywall.backend.models.Usuario;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -34,14 +35,13 @@ public class JwtService {
     // Generar Token
     public String generateToken(Usuario user) {
         Date now = new Date();
-        List<String> roles = user.getRoles().stream().map(role -> role.getName()).toList();
 
         return Jwts.builder()
                 .subject(user.getEmail())
                 .issuedAt(now)
                 .expiration(new Date( now.getTime() + TOKEN_EXPIRATION))
-                .claim("roles", roles)
-                .claim("userId", user.getId())
+                .claim("rol", user.getRol())
+                .claim("userId", user.getIdUsuario())
                 .signWith(signingKey, Jwts.SIG.HS256)
                 .compact();
     }
