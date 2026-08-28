@@ -1,12 +1,11 @@
-package com.alkywall.backend.controllers;
+package com.alkywall.backend.security.controllers;
 
-import com.alkywall.backend.controllers.DTOs.LoginRequestDTO;
-import com.alkywall.backend.controllers.DTOs.LoginResponseDTO;
-import com.alkywall.backend.controllers.DTOs.RegisterRequestDTO;
-import com.alkywall.backend.controllers.DTOs.RegisterResponseDTO;
-import com.alkywall.backend.services.JwtService;
+import com.alkywall.backend.security.controllers.DTOs.LoginRequestDTO;
+import com.alkywall.backend.security.controllers.DTOs.LoginResponseDTO;
+import com.alkywall.backend.security.controllers.DTOs.RegisterRequestDTO;
+import com.alkywall.backend.security.controllers.DTOs.RegisterResponseDTO;
+import com.alkywall.backend.security.services.JwtService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Slf4j
 public class AuthController {
 
     private final JwtService jwtService;
@@ -41,10 +39,10 @@ public class AuthController {
         return ResponseEntity.ok(loginResponseDTO);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDTO> registerUser(@RequestBody RegisterRequestDTO body) {
-
-
-        return ResponseEntity.ok();
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<RegisterResponseDTO> registerUser(@RequestBody RegisterRequestDTO body) {
+//
+//
+//        return ResponseEntity.ok();
+//    }
 }

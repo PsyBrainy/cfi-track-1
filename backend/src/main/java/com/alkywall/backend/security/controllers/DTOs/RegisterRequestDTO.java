@@ -1,4 +1,4 @@
-package com.alkywall.backend.controllers.DTOs;
+package com.alkywall.backend.security.controllers.DTOs;
 
 public class RegisterRequestDTO {
     private String nombre;

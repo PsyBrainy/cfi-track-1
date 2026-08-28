@@ -1,4 +1,4 @@
-package com.alkywall.backend.services;
+package com.alkywall.backend.security.services;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -31,20 +32,26 @@ public class JwtService {
     }
 
     // Generar Token
-    public String generateToken(String username) {
+    public String generateToken(Usuario user) {
         Date now = new Date();
+        List<String> roles = user.getRoles().stream().map(role -> role.getName()).toList();
 
         return Jwts.builder()
-                .subject(username)
+                .subject(user.getEmail())
                 .issuedAt(now)
                 .expiration(new Date( now.getTime() + TOKEN_EXPIRATION))
-                .claim("role", "CLIENT")
+                .claim("roles", roles)
+                .claim("userId", user.getId())
                 .signWith(signingKey, Jwts.SIG.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
         return extractClaim(token, claims -> claims.getSubject());
+    }
+
+    public List<String> extractRoles(String token) {
+        return extractClaim(token, claims -> claims.get("roles", List.class));
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
