@@ -26,4 +26,16 @@ public class CuentaServiceImpl implements ICuentaService {
 
         return dto;
     }
+
+    @Override
+    public CuentaDTO obtenerCuentaPorIdUsuario(Long id) {
+        Cuenta cuenta = cuentaRepository.findByIdUsuario(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró una cuenta para este usuario"));
+
+        CuentaDTO dto = new CuentaDTO();
+        dto.setSaldoDisponible(cuenta.getSaldo());
+        dto.setMoneda(cuenta.getMoneda());
+
+        return dto;
+    }
 }
