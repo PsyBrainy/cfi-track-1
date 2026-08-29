@@ -6,11 +6,14 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -33,17 +36,20 @@ public class JwtService {
     }
 
     // Generar Token
-    public String generateToken(Usuario user) {
+    public String generateToken(Map<String, Object> extraClaims, Usuario user) {
         Date now = new Date();
 
         return Jwts.builder()
+                .claims(extraClaims)
                 .subject(user.getEmail())
                 .issuedAt(now)
                 .expiration(new Date( now.getTime() + TOKEN_EXPIRATION))
-                .claim("rol", user.getRol())
-                .claim("userId", user.getIdUsuario())
                 .signWith(signingKey, Jwts.SIG.HS256)
                 .compact();
+    }
+
+    public String generateToken(Usuario user) {
+        return generateToken(new HashMap<>(), user);
     }
 
     public String extractUsername(String token) {
@@ -59,13 +65,9 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public boolean isTokenValid(String token, String username) {
-        try {
-            final String tokenUsername = extractUsername(token);
-            return (tokenUsername.equals(username) && !isTokenExpired(token));
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new RuntimeException("Token JWT inválido o malformado");
-        }
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String tokenUsername = extractUsername(token);
+        return (tokenUsername.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
