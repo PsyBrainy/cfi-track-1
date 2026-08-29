@@ -29,7 +29,7 @@ public class CuentaServiceImpl implements ICuentaService {
 
     @Override
     public CuentaDTO obtenerCuentaPorIdUsuario(Long id) {
-        Cuenta cuenta = cuentaRepository.findByIdUsuario(id)
+        Cuenta cuenta = cuentaRepository.findByUsuario_IdUsuario(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontró una cuenta para este usuario"));
 
         CuentaDTO dto = new CuentaDTO();
