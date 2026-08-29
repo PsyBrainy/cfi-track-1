@@ -35,7 +35,7 @@ public class DataInitializer {
                            PasswordEncoder passwordEncoder) {
         return args -> {
 
-            if (!usuarioRepository.existsByEmail("admin@alkywall.com")) {
+            if (!usuarioRepository.existsByEmail(ADMIN_EMAIL)) {
 
                 Usuario admin = new Usuario(
                         ADMIN_NOMBRE,
@@ -43,7 +43,8 @@ public class DataInitializer {
                         ADMIN_EMAIL,
                         ADMIN_TELEFONO,
                         passwordEncoder.encode(ADMIN_PASSWORD),
-                        ADMIN_DNI
+                        ADMIN_DNI,
+                        Role.ADMIN
                 );
 
                 admin.setRol(Role.ADMIN);

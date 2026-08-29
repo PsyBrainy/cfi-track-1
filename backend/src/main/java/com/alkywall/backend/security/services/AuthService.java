@@ -1,5 +1,6 @@
 package com.alkywall.backend.security.services;
 
+import com.alkywall.backend.models.Role;
 import com.alkywall.backend.models.Usuario;
 import com.alkywall.backend.repositories.UsuarioRepository;
 import com.alkywall.backend.security.controllers.DTOs.*;
@@ -57,7 +58,8 @@ public class AuthService {
                 request.getEmail(),
                 request.getDni(),
                 passwordHash,
-                request.getTelefono()
+                request.getTelefono(),
+                Role.CLIENT
         );
 
         Usuario fullUser = usuarioRepository.save(user);
