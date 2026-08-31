@@ -10,7 +10,6 @@ import com.alkywall.backend.models.Usuario;
 import com.alkywall.backend.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public UsuarioResponseDTO obtenerPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + id));
 
         return mapearAResponseDTO(usuario);
     }
@@ -72,7 +71,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public void eliminarUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con ID: " + id));
 
         usuario.setEstado(EstadoUsuario.INACTIVO);
         usuarioRepository.save(usuario);
