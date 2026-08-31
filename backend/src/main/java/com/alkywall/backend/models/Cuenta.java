@@ -12,7 +12,7 @@ public class Cuenta {
     private Long idCuenta;
 
     // FK hacia Usuario
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 

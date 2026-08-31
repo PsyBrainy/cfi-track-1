@@ -3,7 +3,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log('Aplicación Alkywall cargada correctamente.');
 
-  // Selección de botones de login y registro
   const btnLogin = document.getElementById('btn-login');
   const btnRegister = document.getElementById('btn-register');
   const btnLogout = document.getElementById('btn-logout');
