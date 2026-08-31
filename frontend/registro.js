@@ -42,13 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
     let esValido = true;
 
     if (!datos.nombre || datos.nombre.trim().length < 2) {
-      mostrarError('nombre', 'Ingresá tu nombre completo.');
+      mostrarError('nombre', 'Ingresá tu nombre.');
+      esValido = false;
+    }
+
+    if (!datos.apellido || datos.apellido.trim().length < 2) {
+      mostrarError('apellido', 'Ingresá tu apellido.');
       esValido = false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(datos.email)) {
       mostrarError('email', 'Ingresá un email válido.');
+      esValido = false;
+    }
+
+    if (!datos.dni || !/^\d{7,8}$/.test(datos.dni.trim())) {
+      mostrarError('dni', 'Ingresá un DNI válido (sin puntos).');
       esValido = false;
     }
 
@@ -65,22 +75,36 @@ document.addEventListener('DOMContentLoaded', function () {
     return esValido;
   }
 
+  function extraerMensajeError(cuerpo) {
+    if (!cuerpo) return 'No se pudo completar el registro.';
+    if (typeof cuerpo.message === 'string') return cuerpo.message;
+    if (typeof cuerpo.mensaje === 'string') return cuerpo.mensaje;
+    if (typeof cuerpo.detail === 'string') return cuerpo.detail;
+    if (Array.isArray(cuerpo.errors) && cuerpo.errors.length > 0) {
+      const primero = cuerpo.errors[0];
+      return primero.defaultMessage || primero.message || JSON.stringify(primero);
+    }
+    return 'No se pudo completar el registro.';
+  }
+
   async function registrarUsuario(datos) {
-    const respuesta = await fetch(`${API_BASE_URL}/usuarios/registro`, {
+    const respuesta = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nombre: datos.nombre,
+        apellido: datos.apellido,
         email: datos.email,
+        dni: datos.dni,
         password: datos.password,
+        telefono: datos.telefono || null,
       }),
     });
 
     const cuerpo = await respuesta.json().catch(() => ({}));
 
     if (!respuesta.ok) {
-      const mensaje = cuerpo.mensaje || Object.values(cuerpo)[0] || 'No se pudo completar el registro.';
-      throw new Error(mensaje);
+      throw new Error(extraerMensajeError(cuerpo));
     }
 
     return cuerpo;
@@ -95,7 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const datos = {
         nombre: document.getElementById('nombre').value.trim(),
+        apellido: document.getElementById('apellido').value.trim(),
         email: document.getElementById('email').value.trim(),
+        dni: document.getElementById('dni').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
         password: document.getElementById('password').value,
         confirmarPassword: document.getElementById('confirmar-password').value,
       };
