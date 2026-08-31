@@ -6,16 +6,30 @@ document.addEventListener('DOMContentLoaded', function () {
   // Selección de botones de login y registro
   const btnLogin = document.getElementById('btn-login');
   const btnRegister = document.getElementById('btn-register');
+  const btnLogout = document.getElementById('btn-logout');
+
+  if(localStorage.getItem('usuarioRegistrado') !== null) {
+    btnLogin.style.display = 'none';
+    btnRegister.style.display = 'none';
+    btnLogout.style.display = 'block';
+  }
 
   if (btnLogin) {
     btnLogin.addEventListener('click', function () {
-      alert('Funcionalidad de Inicio de Sesión (En desarrollo).');
+      window.location.href = 'autenticacion/login.html';
     });
   }
 
   if (btnRegister) {
     btnRegister.addEventListener('click', function () {
-      alert('Funcionalidad de Registro de Cuenta (En desarrollo).');
+      window.location.href = 'autenticacion/registro.html';
     });
+  }
+
+  if(btnLogout) {
+    btnLogout.addEventListener('click', function () {
+      localStorage.removeItem('usuarioRegistrado');
+      window.location.href = 'autenticacion/login.html';
+    })
   }
 });

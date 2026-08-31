@@ -1,0 +1,49 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .btn-register {
+        background-color: transparent;
+        color: var(--color-primario);
+        padding: 0 20px 0 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+    }
+
+    .btn-register:hover {
+        font-size: 0.900rem;
+    }
+}
+
+.m-t-50{
+    margin-top: 50px;
+}
+
+input {
+    padding: 8px;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    display: none;
+}
