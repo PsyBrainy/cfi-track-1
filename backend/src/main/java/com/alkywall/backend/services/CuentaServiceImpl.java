@@ -1,5 +1,6 @@
 package com.alkywall.backend.services;
 
+import com.alkywall.backend.dtos.BalanceDTO;
 import com.alkywall.backend.dtos.CuentaDTO;
 import com.alkywall.backend.exceptions.ResourceNotFoundException;
 import com.alkywall.backend.models.Cuenta;
@@ -16,11 +17,11 @@ public class CuentaServiceImpl implements ICuentaService {
     }
 
     @Override
-    public CuentaDTO obtenerBalancePorEmail(String email) {
+    public BalanceDTO obtenerBalancePorEmail(String email) {
         Cuenta cuenta = cuentaRepository.findByUsuarioEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontró una cuenta para este usuario"));
 
-        CuentaDTO dto = new CuentaDTO();
+        BalanceDTO dto = new BalanceDTO();
         dto.setSaldoDisponible(cuenta.getSaldo());
         dto.setMoneda(cuenta.getMoneda());
 
