@@ -294,7 +294,117 @@ main {
   font-size: 0.85rem;
 }
 
-/* 6. Diseño Responsive (Media Query) */
+/* 7. Modal de Registro */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.modal-overlay.activo {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-tarjeta);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.modal h2 {
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.modal-subtitulo {
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-texto-suave);
+}
+
+.modal-cerrar:hover {
+  color: var(--color-texto);
+}
+
+.campo {
+  margin-bottom: 1rem;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+.campo input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 6px;
+  font-family: var(--fuente-principal);
+  font-size: 0.95rem;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.campo input.input-error {
+  border-color: var(--color-error);
+}
+
+.error-campo {
+  display: block;
+  min-height: 1.1rem;
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.mensaje-formulario {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  min-height: 1.2rem;
+}
+
+.mensaje-formulario.exito {
+  color: var(--color-exito);
+}
+
+.mensaje-formulario.error {
+  color: var(--color-error);
+}
+
+.btn-block {
+  width: 100%;
+  text-align: center;
+}
+
+/* 8. Diseño Responsive (Media Query) */
 @media (max-width: 768px) {
   .header .container {
     flex-direction: column;
