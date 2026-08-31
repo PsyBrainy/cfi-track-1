@@ -1,5 +1,6 @@
 package com.alkywall.backend.controllers;
 
+import com.alkywall.backend.dtos.BalanceDTO;
 import com.alkywall.backend.dtos.CuentaDTO;
 import com.alkywall.backend.services.ICuentaService;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,23 @@ public class CuentaController {
         this.cuentaService = cuentaService;
     }
 
-    @GetMapping("/balance")
-    public ResponseEntity<CuentaDTO> obtenerBalance(Authentication authentication) {
+    @GetMapping
+    public ResponseEntity<CuentaDTO> obtenerCuenta(Authentication authentication) {
 
         String email = authentication.getName();
 
         CuentaDTO cuentaDTO = cuentaService.obtenerBalancePorEmail(email);
 
         return ResponseEntity.ok(cuentaDTO);
+    }
+
+    @GetMapping("/balance")
+    public ResponseEntity<BalanceDTO> obtenerBalance(Authentication authentication) {
+
+        String email = authentication.getName();
+
+        BalanceDTO balanceDTO = cuentaService.obtenerBalancePorEmail(email);
+
+        return ResponseEntity.ok(balanceDTO);
     }
 }
