@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -30,37 +29,44 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
 
+        // No hay token, continuar normalmente
         if(authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authorization.substring(7);
-        String userEmail = null;
-
-        try {
-            userEmail = jwtService.extractUsername(token);
-        } catch (Exception e) {
-            log.info("Token inválido o expirado");
-        }
-
-        if(userEmail == null || SecurityContextHolder.getContext().getAuthentication() != null) {
+        // Si ya existe una autenticación, no sobrescribirla
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-        boolean tokenValido = jwtService.isTokenValid(token, userDetails);
+        String token = authorization.substring(7);
 
-        if(tokenValido) {
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-            );
+        try {
+            String userEmail = jwtService.extractUsername(token);
 
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            if(userEmail == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+            boolean tokenValido = jwtService.isTokenValid(token, userDetails);
+            if(tokenValido) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
+
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+        } catch (Exception e) {
+            log.info("Token inválido o expirado");
         }
 
         filterChain.doFilter(request, response);
