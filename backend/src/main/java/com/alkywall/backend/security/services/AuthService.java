@@ -64,13 +64,13 @@ public class AuthService {
 
         Usuario fullUser = usuarioRepository.save(user);
 
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(fullUser);
 
         RegisterResponseDTO response = new RegisterResponseDTO();
         response.setToken(token);
-        response.setNombre(request.getNombre());
-        response.setApellido(request.getApellido());
-        response.setEmail(request.getEmail());
+        response.setNombre(fullUser.getNombre());
+        response.setApellido(fullUser.getApellido());
+        response.setEmail(fullUser.getEmail());
         response.setId(fullUser.getIdUsuario());
         response.setRole(fullUser.getRol());
 
