@@ -31,3 +31,19 @@
     color: #212529;
     font-size: 2.8rem;
 }
+
+.dashboard-accion {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4f46e5;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.dashboard-accion:hover {
+    background-color: #4338ca;
+}
