@@ -1,0 +1,104 @@
+/* ==========================================
+   HISTORIAL DE MOVIMIENTOS - Estilos aislados (CSS Module)
+   Prefijo "historial-" para evitar colisiones
+   con el resto de las vistas de la aplicación.
+   ========================================== */
+
+.historial-container {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.historial-volver {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #4f46e5;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.historial-volver:hover {
+    text-decoration: underline;
+}
+
+.historial-titulo {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #212529;
+}
+
+.historial-mensaje {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.historial-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.historial-tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.25rem;
+}
+
+.historial-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.historial-tipo {
+    margin: 0;
+    font-weight: 600;
+    color: #212529;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+}
+
+.historial-fecha {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+.historial-monto {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.historial-ingreso {
+    color: #10b981;
+}
+
+.historial-egreso {
+    color: #ef4444;
+}
+
+/* Responsive: pantallas móviles */
+@media (max-width: 480px) {
+    .historial-tarjeta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .historial-monto {
+        align-self: flex-end;
+    }
+}
