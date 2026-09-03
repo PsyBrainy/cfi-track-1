@@ -33,6 +33,11 @@
         <div id="documentoError" class="error">El documento solo puede contener números.</div>
         <div id="documentoLongitudError" class="error">El documento debe tener 8 números.</div>
 
+        <label for="telefono">Telefono: </label>
+        <input type="text" id="telefono" name="telefono" placeholder="01122334">
+        <div id="telefonoError" class="error">El telefono solo puede contener números.</div>
+        <div id="telefonoLongitudError" class="error">El telefono debe tener 10 números.</div>
+
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" placeholder="correo@gmail.com">
         <div id="emailError" class="error">Email Inválido</div>
@@ -41,7 +46,9 @@
         <input type="password" id="password" name="password" placeholder="********">
         <div id="passwordError" class="error">La contraseña debe tener al menos 8 caracteres.</div>
 
-        <button type="submit" class="btn btn-primario">Registrarse</button>
+        <button type="submit" class="btn btn-primario" id="btn-registro">Registrarse</button>
+
+        <div id="serverError" class="error"></div>
     </form>
 </main>
     <script src="validacionesRegistro.js"></script>

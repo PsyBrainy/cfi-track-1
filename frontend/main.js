@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnRegister = document.getElementById('btn-register');
   const btnLogout = document.getElementById('btn-logout');
 
-  if(localStorage.getItem('usuarioRegistrado') !== null) {
+  if(localStorage.getItem('token') !== null) {
     btnLogin.style.display = 'none';
     btnRegister.style.display = 'none';
     btnLogout.style.display = 'block';
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if(btnLogout) {
     btnLogout.addEventListener('click', function () {
-      localStorage.removeItem('usuarioRegistrado');
+      localStorage.removeItem('token');
       window.location.href = 'autenticacion/login.html';
     })
   }
