@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Alkywall</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="reportes/reporte.module.css">
+</head>
+<body>
+<main class="dashboard-container">
+    <section class="balance-card">
+        <p>Tu saldo actual</p>
+        <!-- Contenedor especifico para el saldo -->
+        <h2 id="saldo-disponible">Cargando...</h2>
+        <a href="transferencias/transferencia.html" class="dashboard-accion">Enviar dinero</a>
+        <a href="movimientos/historial.html" class="dashboard-accion">Ver movimientos</a>
+    </section>
+
+    <!-- Componente aislado: Reporte de Gastos -->
+    <section class="reporte-container">
+        <h2 class="reporte-titulo">Reporte de gastos</h2>
+        <p class="reporte-mensaje" id="reporte-mensaje"></p>
+        <div class="reporte-barras" id="reporte-barras"></div>
+    </section>
+</main>
+<script src="dashboard.js"></script>
+<script src="reportes/reporte.js"></script>
+</body>
+</html>
