@@ -1,6 +1,7 @@
 package com.alkywall.backend.services;
 
 import com.alkywall.backend.exceptions.ResourceNotFoundException;
+import com.alkywall.backend.exceptions.SaldoInsuficienteException;
 import com.alkywall.backend.models.Cuenta;
 import com.alkywall.backend.models.TipoTransaccion;
 import com.alkywall.backend.models.Transaccion;
@@ -45,5 +46,51 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
         transaccionRepository.save(transaccion);
 
+    }
+
+    @Override
+    @Transactional
+    public void realizarTransferencia(Long cuentaOrigenId, Long cuentaDestinoId, BigDecimal monto) {
+        Cuenta cuentaOrigen = cuentaRepository.findById(cuentaOrigenId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta de origen no encontrada"));
+
+        Cuenta cuentaDestino = cuentaRepository.findById(cuentaDestinoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
+
+        if(cuentaOrigen.getSaldo().compareTo(monto) < 0) {
+            throw new SaldoInsuficienteException("Saldo insuficiente para realizar la transferencia");
+        }
+
+        cuentaOrigen.setSaldo(
+                cuentaOrigen.getSaldo().subtract(monto)
+        );
+
+        cuentaDestino.setSaldo(
+                cuentaDestino.getSaldo().add(monto)
+        );
+
+        cuentaRepository.save(cuentaOrigen);
+        cuentaRepository.save(cuentaDestino);
+
+        Transaccion egreso = new Transaccion(
+                cuentaOrigen,
+                cuentaDestino,
+                TipoTransaccion.EGRESO,
+                monto,
+                cuentaOrigen.getMoneda(),
+                "Transferencia"
+        );
+
+        Transaccion ingreso = new Transaccion(
+                cuentaOrigen,
+                cuentaDestino,
+                TipoTransaccion.INGRESO,
+                monto,
+                cuentaDestino.getMoneda(),
+                "Transferencia"
+        );
+
+        transaccionRepository.save(egreso);
+        transaccionRepository.save(ingreso);
     }
 }
