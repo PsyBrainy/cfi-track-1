@@ -7,6 +7,7 @@ public class BalanceDTO {
 
     private BigDecimal saldoDisponible;
     private Moneda moneda;
+    private Long cuentaId;
 
     //getters & setters
     public BigDecimal getSaldoDisponible() {
@@ -23,5 +24,13 @@ public class BalanceDTO {
 
     public void setMoneda(Moneda moneda) {
         this.moneda = moneda;
+    }
+
+    public Long getCuentaId() {
+        return cuentaId;
+    }
+
+    public void setCuentaId(Long cuentaId) {
+        this.cuentaId = cuentaId;
     }
 }
