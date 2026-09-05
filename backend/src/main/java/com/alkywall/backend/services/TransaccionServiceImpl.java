@@ -1,5 +1,7 @@
 package com.alkywall.backend.services;
 
+import com.alkywall.backend.dtos.ReporteGastosDTO;
+import com.alkywall.backend.dtos.TransaccionResumenDTO;
 import com.alkywall.backend.exceptions.ResourceNotFoundException;
 import com.alkywall.backend.exceptions.SaldoInsuficienteException;
 import com.alkywall.backend.models.Cuenta;
@@ -11,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class TransaccionServiceImpl implements ITransaccionService {
@@ -23,14 +26,11 @@ public class TransaccionServiceImpl implements ITransaccionService {
         this.transaccionRepository = transaccionRepository;
     }
 
-
     @Override
     @Transactional
     public void realizarDeposito(Long cuentaId, BigDecimal monto) {
-
         Cuenta cuenta = cuentaRepository.findById(cuentaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
-
 
         cuenta.setSaldo(cuenta.getSaldo().add(monto));
         cuentaRepository.save(cuenta);
@@ -92,5 +92,17 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
         transaccionRepository.save(egreso);
         transaccionRepository.save(ingreso);
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public List<TransaccionResumenDTO> obtenerHistorialUsuario(Long cuentaId) {
+        return transaccionRepository.obtenerHistorialPorCuenta(cuentaId);
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public List<ReporteGastosDTO> obtenerReporteGastosUsuario(Long cuentaId) {
+        return transaccionRepository.obtenerTotalAgrupadoPorTipo(cuentaId);
     }
 }
