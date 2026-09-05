@@ -39,6 +39,7 @@ public class CuentaServiceImpl implements ICuentaService {
         dto.setCbu(cuenta.getCbu());
         dto.setAlias(cuenta.getAlias());
         dto.setId_usuario(id);
+        dto.setCuentaId(cuenta.getIdCuenta());
 
         return dto;
     }
