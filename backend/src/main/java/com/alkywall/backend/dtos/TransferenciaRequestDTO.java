@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 public class TransferenciaRequestDTO {
 
     private Long cuentaDestinoId;
+    private String alias;
+    private String cbu;
     private BigDecimal monto;
 
     public Long getCuentaDestinoId() {
@@ -21,5 +23,21 @@ public class TransferenciaRequestDTO {
 
     public void setMonto(BigDecimal monto) {
         this.monto = monto;
+    }
+
+    public String getCbu() {
+        return cbu;
+    }
+
+    public void setCbu(String cbu) {
+        this.cbu = cbu;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }

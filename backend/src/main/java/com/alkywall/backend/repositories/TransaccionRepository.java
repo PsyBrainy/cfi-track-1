@@ -14,7 +14,10 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long> 
     //Consulta: historial con WHERE y ORDER BY
     @Query("SELECT new com.alkywall.backend.dtos.TransaccionResumenDTO(t.idTransaccion, t.monto, cast(t.tipo as string), t.fechaHora, cast(t.estado as string)) " +
             "FROM Transaccion t " +
-            "WHERE t.cuentaOrigen.idCuenta = :cuentaId " +
+            "WHERE " +
+            "(t.cuentaOrigen.idCuenta = :cuentaId AND t.tipo = 'EGRESO') " +
+            "OR " +
+            "(t.cuentaDestino.idCuenta = :cuentaId AND t.tipo = 'INGRESO') " +
             "ORDER BY t.fechaHora DESC")
     List<TransaccionResumenDTO> obtenerHistorialPorCuenta(@Param("cuentaId") Long cuentaId);
 
@@ -23,6 +26,7 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long> 
             "FROM Transaccion t " +
             "JOIN t.cuentaOrigen c " +
             "WHERE c.idCuenta = :cuentaId " +
+            "AND t.tipo IN ('EGRESO', 'EXTRACCION', 'PAGO') " +
             "GROUP BY t.tipo")
     List<ReporteGastosDTO> obtenerTotalAgrupadoPorTipo(@Param("cuentaId") Long cuentaId);
 }

@@ -11,5 +11,9 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
     Optional<Cuenta> findByUsuario_IdUsuario(Long id);
 
+    Optional<Cuenta> findByCbu(String cbu);
+
+    Optional<Cuenta> findByAlias(String alias);
+
 
 }

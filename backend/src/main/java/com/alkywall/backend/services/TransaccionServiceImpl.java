@@ -28,8 +28,8 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
     @Override
     @Transactional
-    public void realizarDeposito(Long cuentaId, BigDecimal monto) {
-        Cuenta cuenta = cuentaRepository.findById(cuentaId)
+    public void realizarDeposito(String userEmail, BigDecimal monto) {
+        Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
 
         cuenta.setSaldo(cuenta.getSaldo().add(monto));
@@ -50,12 +50,29 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
     @Override
     @Transactional
-    public void realizarTransferencia(Long cuentaOrigenId, Long cuentaDestinoId, BigDecimal monto) {
-        Cuenta cuentaOrigen = cuentaRepository.findById(cuentaOrigenId)
+    public void realizarTransferencia(String userEmail, String alias, String cbu, BigDecimal monto) {
+        Cuenta cuentaOrigen = cuentaRepository.findByUsuarioEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta de origen no encontrada"));
 
-        Cuenta cuentaDestino = cuentaRepository.findById(cuentaDestinoId)
+        Cuenta cuentaDestino;
+
+        if(alias != null && !alias.isBlank()) {
+            cuentaDestino = cuentaRepository.findByAlias(alias)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
+        } else if (cbu != null && !cbu.isBlank()) {
+            cuentaDestino = cuentaRepository.findByCbu(cbu)
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
+        } else {
+            throw new IllegalArgumentException(
+                "Debe proporcionar un alias o un CBU"
+            );
+        }
+
+        if (cuentaOrigen.getIdCuenta().equals(cuentaDestino.getIdCuenta())) {
+            throw new IllegalArgumentException(
+                    "No puede transferir dinero a su propia cuenta"
+            );
+        }
 
         if(cuentaOrigen.getSaldo().compareTo(monto) < 0) {
             throw new SaldoInsuficienteException("Saldo insuficiente para realizar la transferencia");
@@ -96,13 +113,19 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
     @Override
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
-    public List<TransaccionResumenDTO> obtenerHistorialUsuario(Long cuentaId) {
-        return transaccionRepository.obtenerHistorialPorCuenta(cuentaId);
+    public List<TransaccionResumenDTO> obtenerHistorialUsuario(String userEmail) {
+        Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
+            .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
+
+        return transaccionRepository.obtenerHistorialPorCuenta(cuenta.getIdCuenta());
     }
 
     @Override
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
-    public List<ReporteGastosDTO> obtenerReporteGastosUsuario(Long cuentaId) {
-        return transaccionRepository.obtenerTotalAgrupadoPorTipo(cuentaId);
+    public List<ReporteGastosDTO> obtenerReporteGastosUsuario(String userEmail) {
+        Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
+            .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
+
+        return transaccionRepository.obtenerTotalAgrupadoPorTipo(cuenta.getIdCuenta());
     }
 }
