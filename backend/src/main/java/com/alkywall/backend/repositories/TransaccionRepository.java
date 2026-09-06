@@ -12,16 +12,16 @@ import java.util.List;
 @Repository
 public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
     //Consulta: historial con WHERE y ORDER BY
-    @Query("SELECT new com.alkywall.backend.dtos.TransaccionResumenDTO(t.idTransaccion, t.monto, cast(t.tipo as string), t.fecha, cast(t.estado as string)) " +
+    @Query("SELECT new com.alkywall.backend.dtos.TransaccionResumenDTO(t.idTransaccion, t.monto, cast(t.tipo as string), t.fechaHora, cast(t.estado as string)) " +
             "FROM Transaccion t " +
-            "WHERE t.cuenta.idCuenta = :cuentaId " +
-            "ORDER BY t.fecha DESC")
+            "WHERE t.cuentaOrigen.idCuenta = :cuentaId " +
+            "ORDER BY t.fechaHora DESC")
     List<TransaccionResumenDTO> obtenerHistorialPorCuenta(@Param("cuentaId") Long cuentaId);
 
     // Consulta: Agrupa con JOIN, GROUP BY y SUM
     @Query("SELECT new com.alkywall.backend.dtos.ReporteGastosDTO(cast(t.tipo as string), SUM(t.monto)) " +
             "FROM Transaccion t " +
-            "JOIN t.cuenta c " +
+            "JOIN t.cuentaOrigen c " +
             "WHERE c.idCuenta = :cuentaId " +
             "GROUP BY t.tipo")
     List<ReporteGastosDTO> obtenerTotalAgrupadoPorTipo(@Param("cuentaId") Long cuentaId);
