@@ -24,6 +24,7 @@ public class CuentaServiceImpl implements ICuentaService {
         BalanceDTO dto = new BalanceDTO();
         dto.setSaldoDisponible(cuenta.getSaldo());
         dto.setMoneda(cuenta.getMoneda());
+        dto.setCuentaId(cuenta.getIdCuenta());
 
         return dto;
     }
@@ -39,6 +40,7 @@ public class CuentaServiceImpl implements ICuentaService {
         dto.setCbu(cuenta.getCbu());
         dto.setAlias(cuenta.getAlias());
         dto.setId_usuario(id);
+        dto.setCuentaId(cuenta.getIdCuenta());
 
         return dto;
     }

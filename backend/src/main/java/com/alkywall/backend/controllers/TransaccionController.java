@@ -1,13 +1,18 @@
 package com.alkywall.backend.controllers;
 
+import com.alkywall.backend.dtos.DepositoRequestDTO;
+import com.alkywall.backend.dtos.ReporteGastosDTO;
+import com.alkywall.backend.dtos.TransaccionResumenDTO;
+import com.alkywall.backend.dtos.TransferenciaRequestDTO;
+import com.alkywall.backend.security.services.CustomUserDetails;
 import com.alkywall.backend.services.ITransaccionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transacciones")
@@ -20,9 +25,38 @@ public class TransaccionController {
     }
 
     @PostMapping("/deposito")
-    public ResponseEntity<Void> realizarDeposito(@RequestParam Long cuentaId, @RequestParam BigDecimal monto) {
-        transaccionService.realizarDeposito(cuentaId, monto);
+    public ResponseEntity<Void> realizarDeposito(@AuthenticationPrincipal CustomUserDetails user, @RequestBody DepositoRequestDTO request) {
+        String userEmail = user.getUsername();
+
+        transaccionService.realizarDeposito(userEmail, request.getMonto());
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/transferencia")
+    public ResponseEntity<Void> realizarTransferencia(@AuthenticationPrincipal CustomUserDetails user, @RequestBody TransferenciaRequestDTO request) {
+        String userEmail = user.getUsername();
+
+        transaccionService.realizarTransferencia(userEmail, request.getCbu(), request.getAlias(), request.getMonto());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/reporte-gastos")
+    public ResponseEntity<List<ReporteGastosDTO>> listarReporteDeGastos(@AuthenticationPrincipal CustomUserDetails user) {
+        String userEmail = user.getUsername();
+
+        List<ReporteGastosDTO> reportes = transaccionService.obtenerReporteGastosUsuario(userEmail);
+
+        return ResponseEntity.ok(reportes);
+    }
+
+    @GetMapping("/historial")
+    public ResponseEntity<List<TransaccionResumenDTO>> obtenerHistorial(@AuthenticationPrincipal CustomUserDetails user) {
+        String userEmail = user.getUsername();
+
+        List<TransaccionResumenDTO> historial = transaccionService.obtenerHistorialUsuario(userEmail);
+
+        return ResponseEntity.ok(historial);
     }
 }
