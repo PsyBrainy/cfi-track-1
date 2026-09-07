@@ -1,37 +1,42 @@
 // Alkywall - Formulario de Transferencias/Pagos
 //
-// NOTA: el endpoint POST /api/transacciones/transferencia todavia no existe
-// en el backend (ticket #30 depende de un endpoint "nuevo" que hay que crear).
-// Se asume que recibe un TransferenciaRequestDTO con forma
-// { destinatario: string (id o email), monto: number } y que devuelve 400
-// cuando la operacion no puede completarse (ej. saldo insuficiente).
-// Ajustar la URL y los nombres de campos cuando el backend este listo.
+// Endpoint real: POST /api/transacciones/transferencia
+// Body: { "alias": "...", "cbu": "...", "monto": 123 } (mandar solo uno de
+// alias/cbu, el otro vacio). El backend identifica la cuenta de origen a
+// partir del email del JWT.
+// Errores: 404 si no existe la cuenta destino, 422 si el saldo es
+// insuficiente o los datos son invalidos (no 400).
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
 const form = document.getElementById('form-transferencia');
-const destinatarioInput = document.getElementById('destinatario');
+const aliasInput = document.getElementById('alias');
+const cbuInput = document.getElementById('cbu');
 const montoInput = document.getElementById('monto');
-const errorDestinatario = document.getElementById('error-destinatario');
+const errorAlias = document.getElementById('error-alias');
+const errorCbu = document.getElementById('error-cbu');
 const errorMonto = document.getElementById('error-monto');
 const mensaje = document.getElementById('transferencia-mensaje');
 const btnTransferir = document.getElementById('btn-transferir');
 
 function limpiarErrores() {
-    errorDestinatario.textContent = '';
+    errorAlias.textContent = '';
+    errorCbu.textContent = '';
     errorMonto.textContent = '';
-    destinatarioInput.classList.remove('input-error');
+    aliasInput.classList.remove('input-error');
+    cbuInput.classList.remove('input-error');
     montoInput.classList.remove('input-error');
     mensaje.textContent = '';
     mensaje.className = 'transferencia-mensaje';
 }
 
-function validarFormulario(destinatario, monto) {
+function validarFormulario(alias, cbu, monto) {
     let esValido = true;
 
-    if (!destinatario) {
-        errorDestinatario.textContent = 'Ingresá el ID o email del destinatario.';
-        destinatarioInput.classList.add('input-error');
+    if (!alias && !cbu) {
+        errorAlias.textContent = 'Ingresá un alias o un CBU.';
+        aliasInput.classList.add('input-error');
+        cbuInput.classList.add('input-error');
         esValido = false;
     }
 
@@ -47,7 +52,7 @@ function validarFormulario(destinatario, monto) {
 async function extraerMensajeError(respuesta) {
     try {
         const cuerpo = await respuesta.json();
-        return cuerpo.message || cuerpo.mensaje || cuerpo.detail || 'No se pudo completar la transferencia.';
+        return cuerpo.message || 'No se pudo completar la transferencia.';
     } catch {
         return 'No se pudo completar la transferencia.';
     }
@@ -57,10 +62,11 @@ form.addEventListener('submit', async function (evento) {
     evento.preventDefault();
     limpiarErrores();
 
-    const destinatario = destinatarioInput.value.trim();
+    const alias = aliasInput.value.trim();
+    const cbu = cbuInput.value.trim();
     const monto = montoInput.value;
 
-    if (!validarFormulario(destinatario, monto)) {
+    if (!validarFormulario(alias, cbu, monto)) {
         return;
     }
 
@@ -82,17 +88,11 @@ form.addEventListener('submit', async function (evento) {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                destinatario: destinatario,
+                alias: alias || null,
+                cbu: cbu || null,
                 monto: Number(monto)
             })
         });
-
-        if (respuesta.status === 400) {
-            const textoError = await extraerMensajeError(respuesta);
-            mensaje.textContent = textoError;
-            mensaje.className = 'transferencia-mensaje transferencia-error-general';
-            return;
-        }
 
         if (!respuesta.ok) {
             const textoError = await extraerMensajeError(respuesta);
