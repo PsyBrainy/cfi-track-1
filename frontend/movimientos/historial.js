@@ -1,12 +1,11 @@
 // Alkywall - Listado de Movimientos
 //
-// NOTA: el endpoint GET /api/transacciones/historial todavia no existe en el
-// backend (el ticket #34 asume que "el backend ya provee la informacion",
-// pero en este repo todavia no esta implementado). Se asume que devuelve un
-// array de movimientos con forma:
-// { idTransaccion, tipo, monto (positivo = ingreso, negativo = egreso),
-//   fechaHora, descripcion }
-// Ajustar la URL y los nombres de campos cuando el backend este listo.
+// Endpoint real: GET /api/transacciones/historial
+// Devuelve un array de TransaccionResumenDTO:
+// { id, monto (siempre positivo), tipo ("INGRESO" | "EGRESO"), fecha, estado }
+// El backend identifica la cuenta a partir del email del JWT.
+// Nota: por ahora el historial solo incluye transferencias; los depositos
+// todavia no se listan aca (pendiente del lado del backend).
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -25,8 +24,18 @@ function formatearFecha(fechaISO) {
     return fecha.toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' });
 }
 
+function etiquetaTipo(tipo) {
+    const etiquetas = {
+        INGRESO: 'Transferencia recibida',
+        EGRESO: 'Transferencia enviada',
+        DEPOSITO: 'Depósito'
+    };
+
+    return etiquetas[tipo] || tipo;
+}
+
 function crearTarjetaMovimiento(movimiento) {
-    const esIngreso = Number(movimiento.monto) >= 0;
+    const esIngreso = movimiento.tipo === 'INGRESO' || movimiento.tipo === 'DEPOSITO';
 
     const tarjeta = document.createElement('div');
     tarjeta.className = 'historial-tarjeta';
@@ -36,11 +45,11 @@ function crearTarjetaMovimiento(movimiento) {
 
     const tipo = document.createElement('p');
     tipo.className = 'historial-tipo';
-    tipo.textContent = movimiento.descripcion || movimiento.tipo;
+    tipo.textContent = etiquetaTipo(movimiento.tipo);
 
     const fecha = document.createElement('p');
     fecha.className = 'historial-fecha';
-    fecha.textContent = formatearFecha(movimiento.fechaHora);
+    fecha.textContent = formatearFecha(movimiento.fecha);
 
     info.appendChild(tipo);
     info.appendChild(fecha);

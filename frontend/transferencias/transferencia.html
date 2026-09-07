@@ -16,9 +16,17 @@
 
         <form id="form-transferencia" novalidate>
             <div class="transferencia-campo">
-                <label for="destinatario">Destinatario (ID o Email)</label>
-                <input type="text" id="destinatario" name="destinatario" placeholder="usuario@ejemplo.com">
-                <span class="transferencia-error" id="error-destinatario"></span>
+                <label for="alias">Alias</label>
+                <input type="text" id="alias" name="alias" placeholder="mi.alias.mp">
+                <span class="transferencia-error" id="error-alias"></span>
+            </div>
+
+            <p class="transferencia-separador">o</p>
+
+            <div class="transferencia-campo">
+                <label for="cbu">CBU</label>
+                <input type="text" id="cbu" name="cbu" placeholder="0000003100000000000001">
+                <span class="transferencia-error" id="error-cbu"></span>
             </div>
 
             <div class="transferencia-campo">

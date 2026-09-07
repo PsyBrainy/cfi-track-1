@@ -1,22 +1,39 @@
 // Alkywall - Sistema Visual de Gestión de Gastos
 //
-// NOTA: el endpoint GET /api/transacciones/reporte-gastos todavia no existe
-// en el backend (el ticket #35 asume un reporte agrupado ya armado con
-// GROUP BY, que en este repo todavia no esta implementado). Se asume que
-// devuelve un array con forma:
-// { categoria: string, total: number, porcentaje: number (0-100) }
-// Ajustar la URL y los nombres de campos cuando el backend este listo.
+// Endpoint real: GET /api/transacciones/reporte-gastos
+// Devuelve un array de ReporteGastosDTO: { tipoTransaccion, total }
+// (agrupa EGRESO/EXTRACCION/PAGO). El backend NO manda el porcentaje,
+// asi que se calcula aca en base al total de cada categoria sobre la
+// suma de todas.
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
 const contenedorBarras = document.getElementById('reporte-barras');
 const mensajeReporte = document.getElementById('reporte-mensaje');
 
+const etiquetasTipo = {
+    EGRESO: 'Transferencias enviadas',
+    EXTRACCION: 'Extracciones',
+    PAGO: 'Pagos'
+};
+
 function formatearMoneda(monto) {
     return new Intl.NumberFormat('es-AR', {
         style: 'currency',
         currency: 'ARS'
     }).format(monto);
+}
+
+function calcularPorcentajes(datos) {
+    const totalGeneral = datos.reduce((acumulado, item) => acumulado + Number(item.total), 0);
+
+    return datos.map(function (item) {
+        return {
+            etiqueta: etiquetasTipo[item.tipoTransaccion] || item.tipoTransaccion,
+            total: Number(item.total),
+            porcentaje: totalGeneral > 0 ? (Number(item.total) / totalGeneral) * 100 : 0
+        };
+    });
 }
 
 function crearBarraGasto(item) {
@@ -27,7 +44,7 @@ function crearBarraGasto(item) {
     etiqueta.className = 'reporte-etiqueta';
 
     const nombreCategoria = document.createElement('span');
-    nombreCategoria.textContent = item.categoria;
+    nombreCategoria.textContent = item.etiqueta;
 
     const totalCategoria = document.createElement('span');
     totalCategoria.textContent = formatearMoneda(item.total);
@@ -80,7 +97,7 @@ async function cargarReporteGastos() {
         }
 
         mensajeReporte.textContent = '';
-        datos.forEach(function (item) {
+        calcularPorcentajes(datos).forEach(function (item) {
             contenedorBarras.appendChild(crearBarraGasto(item));
         });
     } catch (error) {

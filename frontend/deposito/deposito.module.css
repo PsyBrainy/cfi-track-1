@@ -1,0 +1,115 @@
+/* ==========================================
+   DEPOSITO DE DINERO - Estilos aislados (CSS Module)
+   Prefijo "deposito-" para evitar colisiones
+   con el resto de las vistas de la aplicación.
+   ========================================== */
+
+.deposito-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.deposito-titulo {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.2rem;
+    color: #212529;
+}
+
+.deposito-subtitulo {
+    margin: 0 0 1.25rem 0;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.deposito-campo {
+    margin-bottom: 1rem;
+}
+
+.deposito-campo label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: #212529;
+}
+
+.deposito-campo input {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid #dcdfe3;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.deposito-campo input:focus {
+    outline: none;
+    border-color: #4f46e5;
+}
+
+.deposito-campo input.input-error {
+    border-color: #ef4444;
+}
+
+.deposito-error {
+    display: block;
+    min-height: 1.1rem;
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.deposito-notificacion {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    min-height: 1.2rem;
+    border-radius: 6px;
+}
+
+.deposito-notificacion.deposito-exito {
+    color: #065f46;
+    background-color: #d1fae5;
+    padding: 0.6rem 0.75rem;
+}
+
+.deposito-notificacion.deposito-error-general {
+    color: #991b1b;
+    background-color: #fee2e2;
+    padding: 0.6rem 0.75rem;
+}
+
+.deposito-boton {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #4f46e5;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.deposito-boton:hover:not(:disabled) {
+    background-color: #4338ca;
+}
+
+.deposito-boton:disabled {
+    background-color: #c7c9d9;
+    cursor: not-allowed;
+}
+
+/* Responsive: pantallas móviles */
+@media (max-width: 480px) {
+    .deposito-container {
+        padding: 1.1rem;
+    }
+}
