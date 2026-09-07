@@ -48,6 +48,24 @@ input {
     display: none;
 }
 
+.requerido {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+.hint {
+    display: block;
+    color: #6c757d;
+    font-size: 0.8em;
+    margin-top: -6px;
+}
+
+.nota-requeridos {
+    color: #6c757d;
+    font-size: 0.85em;
+    margin: 0;
+}
+
 .hero-info h1 {
     font-size: 5vw;!important;
 }
