@@ -1,12 +1,9 @@
 // Alkywall - Depósito de dinero
 //
-// NOTA: el endpoint POST /api/transacciones/deposito ya existe en el backend,
-// pero espera "cuentaId" y "monto" como QUERY PARAMS (@RequestParam), no como
-// JSON body. Ademas, todavia no hay ningun endpoint que devuelva el cuentaId
-// de la cuenta del usuario logueado (GET /api/cuentas devuelve saldo, moneda,
-// alias y cbu, pero no el id de la cuenta). Se intenta leer cuentaDTO.cuentaId
-// o cuentaDTO.id como placeholder hasta que el backend lo exponga; si ninguno
-// viene, se avisa en pantalla en vez de fallar en silencio.
+// Endpoint real: POST /api/transacciones/deposito
+// Body: { "monto": 123 } (JSON)
+// El backend identifica la cuenta a partir del email del JWT, no hace
+// falta mandar cuentaId.
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -40,20 +37,6 @@ function mostrarNotificacion(texto, tipo) {
     notificacion.className = `deposito-notificacion ${tipo}`;
 }
 
-async function obtenerCuentaId(token) {
-    const respuesta = await fetch(`${API_BASE_URL}/cuentas`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    if (!respuesta.ok) {
-        throw new Error('No se pudo obtener la cuenta del usuario.');
-    }
-
-    const cuentaDTO = await respuesta.json();
-    return cuentaDTO.cuentaId ?? cuentaDTO.id ?? null;
-}
-
 montoInput.addEventListener('input', validarMonto);
 
 btnConfirmar.addEventListener('click', async function () {
@@ -67,29 +50,24 @@ btnConfirmar.addEventListener('click', async function () {
         return;
     }
 
-    const monto = montoInput.value;
+    const monto = Number(montoInput.value);
 
     btnConfirmar.disabled = true;
     btnConfirmar.textContent = 'Depositando...';
 
     try {
-        const cuentaId = await obtenerCuentaId(token);
-
-        if (!cuentaId) {
-            mostrarNotificacion('Todavía no se puede depositar: falta que el backend exponga el ID de la cuenta.', 'deposito-error-general');
-            return;
-        }
-
-        const parametros = new URLSearchParams({ cuentaId, monto });
-
-        const respuesta = await fetch(`${API_BASE_URL}/transacciones/deposito?${parametros.toString()}`, {
+        const respuesta = await fetch(`${API_BASE_URL}/transacciones/deposito`, {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ monto: monto })
         });
 
         if (!respuesta.ok) {
             const cuerpo = await respuesta.json().catch(() => ({}));
-            mostrarNotificacion(cuerpo.message || cuerpo.mensaje || 'No se pudo completar el depósito.', 'deposito-error-general');
+            mostrarNotificacion(cuerpo.message || 'No se pudo completar el depósito.', 'deposito-error-general');
             return;
         }
 
