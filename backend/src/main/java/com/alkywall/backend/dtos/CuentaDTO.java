@@ -9,6 +9,7 @@ public class CuentaDTO {
     private String alias;
     private String cbu;
     private Long id_usuario;
+    private Long cuentaId;
 
     //getters & setters
     public BigDecimal getSaldoDisponible() {
@@ -49,5 +50,13 @@ public class CuentaDTO {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Long getCuentaId() {
+        return cuentaId;
+    }
+
+    public void setCuentaId(Long cuentaId) {
+        this.cuentaId = cuentaId;
     }
 }

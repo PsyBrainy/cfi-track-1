@@ -26,6 +26,11 @@ const cargarSaldo = async () => {
             }
         });
 
+        if(response.status === 401) {
+            localStorage.removeItem('token');
+            window.location.href = 'autenticacion/login.html';
+        }
+
         if (response.ok) {
             const data = await response.json();
             saldoElement.textContent = formatearMoneda(data.saldoDisponible);

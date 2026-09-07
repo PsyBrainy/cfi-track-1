@@ -24,7 +24,7 @@ form.addEventListener('submit', async function(event) {
     }
 
     // 2. Validar Contraseña
-    if (passInput.value.length < 8) {
+    if (passInput.value.length < 4) {
         passError.style.display = 'block';
         isValid = false;
     } else {
@@ -75,7 +75,7 @@ form.addEventListener('submit', async function(event) {
             }
 
             form.reset();
-            window.location.replace('../index.html');
+            window.location.replace('../dashboard.html');
 
         } catch(error) {
             console.error('Error de conexion: ', error);

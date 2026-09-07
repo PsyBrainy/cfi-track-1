@@ -47,3 +47,7 @@ input {
     font-size: 0.9em;
     display: none;
 }
+
+.hero-info h1 {
+    font-size: 5vw;!important;
+}
