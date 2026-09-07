@@ -8,10 +8,8 @@ import com.alkywall.backend.security.services.CustomUserDetails;
 import com.alkywall.backend.services.ITransaccionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -37,7 +35,7 @@ public class TransaccionController {
     public ResponseEntity<Void> realizarTransferencia(@AuthenticationPrincipal CustomUserDetails user, @RequestBody TransferenciaRequestDTO request) {
         String userEmail = user.getUsername();
 
-        transaccionService.realizarTransferencia(userEmail, request.getCbu(), request.getAlias(), request.getMonto());
+        transaccionService.realizarTransferencia(userEmail, request.getAlias(), request.getCbu(), request.getMonto());
 
         return ResponseEntity.ok().build();
     }
