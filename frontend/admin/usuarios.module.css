@@ -8,7 +8,7 @@
     min-height: 100vh;
     padding: 2rem 1rem;
     background-color: #f4f7f6;
-    font-family: Arial, sans-serif;
+    font-family: var(--fuente-principal, Arial, sans-serif);
     box-sizing: border-box;
     max-width: 900px;
     margin: 0 auto;
@@ -30,6 +30,7 @@
     margin: 0 0 1rem 0;
     font-size: 1.5rem;
     color: #212529;
+    font-family: var(--fuente-titulo, inherit);
 }
 
 .usuarios-mensaje {
@@ -53,6 +54,22 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
+    animation: usuarios-aparecer 0.35s ease both;
+}
+
+.usuarios-card:nth-of-type(2) {
+    animation-delay: 0.08s;
+}
+
+@keyframes usuarios-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .usuarios-card-titulo {
@@ -103,10 +120,17 @@
     font-size: 0.9rem;
     cursor: pointer;
     margin-top: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .usuarios-boton:hover {
     background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+}
+
+.usuarios-boton:active {
+    transform: translateY(0);
 }
 
 .usuarios-boton.secundario {

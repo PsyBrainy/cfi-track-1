@@ -13,13 +13,14 @@
     width: 100%;
     max-width: 480px;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: var(--fuente-principal, Arial, sans-serif);
 }
 
 .deposito-titulo {
     margin: 0 0 0.25rem 0;
     font-size: 1.2rem;
     color: #212529;
+    font-family: var(--fuente-titulo, inherit);
 }
 
 .deposito-subtitulo {
@@ -95,11 +96,17 @@
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .deposito-boton:hover:not(:disabled) {
     background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+}
+
+.deposito-boton:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .deposito-boton:disabled {
