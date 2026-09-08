@@ -1,0 +1,213 @@
+/* ==========================================
+   ADMINISTRACIÓN DE USUARIOS - Estilos aislados (CSS Module)
+   Prefijo "usuarios-" para evitar colisiones
+   con el resto de las vistas de la aplicación.
+   ========================================== */
+
+.usuarios-container {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: #f4f7f6;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.usuarios-volver {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #4f46e5;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.usuarios-volver:hover {
+    text-decoration: underline;
+}
+
+.usuarios-titulo {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #212529;
+}
+
+.usuarios-mensaje {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    min-height: 1.2rem;
+}
+
+.usuarios-mensaje.error {
+    color: #ef4444;
+}
+
+.usuarios-mensaje.exito {
+    color: #10b981;
+}
+
+.usuarios-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.usuarios-card-titulo {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #212529;
+}
+
+.usuarios-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.usuarios-form .campo-full {
+    grid-column: 1 / -1;
+}
+
+.usuarios-form label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #212529;
+}
+
+.usuarios-form input {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #dcdfe3;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.usuarios-form input:focus {
+    outline: none;
+    border-color: #4f46e5;
+}
+
+.usuarios-boton {
+    padding: 0.65rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #4f46e5;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.usuarios-boton:hover {
+    background-color: #4338ca;
+}
+
+.usuarios-boton.secundario {
+    background-color: #6c757d;
+}
+
+.usuarios-boton.secundario:hover {
+    background-color: #5a6268;
+}
+
+.usuarios-oculto {
+    display: none;
+}
+
+.usuarios-tabla-wrapper {
+    overflow-x: auto;
+}
+
+table.usuarios-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.usuarios-tabla th,
+.usuarios-tabla td {
+    text-align: left;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    white-space: nowrap;
+}
+
+.usuarios-tabla th {
+    color: #6c757d;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+.usuarios-badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.usuarios-badge-rol-admin {
+    background-color: #ede9fe;
+    color: #4f46e5;
+}
+
+.usuarios-badge-rol-client {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.usuarios-badge-estado-activo {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.usuarios-badge-estado-inactivo {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.usuarios-acciones-fila button {
+    margin-right: 0.4rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.usuarios-acciones-fila .editar {
+    background-color: #0ea5e9;
+    color: #ffffff;
+}
+
+.usuarios-acciones-fila .editar:hover {
+    background-color: #0284c7;
+}
+
+.usuarios-acciones-fila .eliminar {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+.usuarios-acciones-fila .eliminar:hover {
+    background-color: #dc2626;
+}
+
+/* Responsive: pantallas móviles */
+@media (max-width: 480px) {
+    .usuarios-form {
+        grid-template-columns: 1fr;
+    }
+
+    .usuarios-card {
+        padding: 1.1rem;
+    }
+}

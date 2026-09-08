@@ -48,8 +48,8 @@ function resetearFormulario() {
     inputId.value = '';
     formTitulo.textContent = 'Crear usuario';
     btnGuardar.textContent = 'Crear usuario';
-    btnCancelarEdicion.style.display = 'none';
-    campoPassword.style.display = 'block';
+    btnCancelarEdicion.classList.add('usuarios-oculto');
+    campoPassword.classList.remove('usuarios-oculto');
     inputPassword.required = true;
     inputEmail.disabled = false;
     inputDni.disabled = false;
@@ -66,12 +66,12 @@ function activarModoEdicion(usuario) {
     inputTelefono.value = usuario.telefono || '';
     inputPassword.value = '';
     inputPassword.required = false;
-    campoPassword.style.display = 'none';
+    campoPassword.classList.add('usuarios-oculto');
     inputEmail.disabled = true;
     inputDni.disabled = true;
     formTitulo.textContent = `Editando a ${usuario.nombre} ${usuario.apellido}`;
     btnGuardar.textContent = 'Guardar cambios';
-    btnCancelarEdicion.style.display = 'inline-block';
+    btnCancelarEdicion.classList.remove('usuarios-oculto');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -91,10 +91,16 @@ function crearFilaUsuario(usuario) {
     tdDni.textContent = usuario.dni;
 
     const tdRol = document.createElement('td');
-    tdRol.textContent = usuario.rol;
+    const badgeRol = document.createElement('span');
+    badgeRol.className = `usuarios-badge ${usuario.rol === 'ADMIN' ? 'usuarios-badge-rol-admin' : 'usuarios-badge-rol-client'}`;
+    badgeRol.textContent = usuario.rol;
+    tdRol.appendChild(badgeRol);
 
     const tdEstado = document.createElement('td');
-    tdEstado.textContent = usuario.estado;
+    const badgeEstado = document.createElement('span');
+    badgeEstado.className = `usuarios-badge ${usuario.estado === 'ACTIVO' ? 'usuarios-badge-estado-activo' : 'usuarios-badge-estado-inactivo'}`;
+    badgeEstado.textContent = usuario.estado;
+    tdEstado.appendChild(badgeEstado);
 
     const tdAcciones = document.createElement('td');
     tdAcciones.className = 'usuarios-acciones-fila';
