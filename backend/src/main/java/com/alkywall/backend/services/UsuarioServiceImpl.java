@@ -28,6 +28,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public UsuarioResponseDTO crearUsuario(UsuarioRequestDTO dto) {
+
+        if (usuarioRepository.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("El email ya está registrado");
+        }
+
+        if (usuarioRepository.existsByDni(dto.getDni())) {
+            throw new IllegalArgumentException("El DNI ya está registrado");
+        }
+
         //Mapear DTO a Entidad
         Usuario nuevoUsuario = new Usuario(
                 dto.getNombre(),
