@@ -93,8 +93,10 @@ async function cargarMovimientos() {
         }
 
         mensaje.textContent = '';
-        movimientos.forEach(function (movimiento) {
-            contenedor.appendChild(crearTarjetaMovimiento(movimiento));
+        movimientos.forEach(function (movimiento, indice) {
+            const tarjeta = crearTarjetaMovimiento(movimiento);
+            tarjeta.style.animationDelay = `${Math.min(indice * 0.05, 0.5)}s`;
+            contenedor.appendChild(tarjeta);
         });
     } catch (error) {
         console.error('Error al cargar movimientos:', error);

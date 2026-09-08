@@ -13,13 +13,14 @@
     width: 100%;
     max-width: 480px;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: var(--fuente-principal, Arial, sans-serif);
 }
 
 .reporte-titulo {
     margin: 0 0 1rem 0;
     font-size: 1.2rem;
     color: #212529;
+    font-family: var(--fuente-titulo, inherit);
 }
 
 .reporte-mensaje {

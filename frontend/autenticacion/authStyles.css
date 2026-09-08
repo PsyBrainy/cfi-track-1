@@ -3,6 +3,10 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    background-color: var(--color-fondo);
 }
 
 .flex-center {
@@ -16,6 +20,12 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background-color: var(--color-tarjeta);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    animation: auth-aparecer 0.35s ease both;
 
     .btn-register {
         background-color: transparent;
@@ -40,6 +50,16 @@ form {
 
 input {
     padding: 8px;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-primario);
 }
 
 .error {
@@ -67,5 +87,17 @@ input {
 }
 
 .hero-info h1 {
-    font-size: 5vw;!important;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    text-align: center;
+}
+
+@keyframes auth-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

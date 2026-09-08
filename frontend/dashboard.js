@@ -8,6 +8,26 @@ const formatearMoneda = (monto) => {
     }).format(monto);
 };
 
+// Animacion de conteo: sube desde 0 hasta el saldo real en vez de aparecer de golpe.
+const animarSaldo = (saldoFinal) => {
+    const duracionMs = 700;
+    const inicio = performance.now();
+
+    function paso(ahora) {
+        const progreso = Math.min((ahora - inicio) / duracionMs, 1);
+        const valorActual = saldoFinal * progreso;
+        saldoElement.textContent = formatearMoneda(valorActual);
+
+        if (progreso < 1) {
+            requestAnimationFrame(paso);
+        } else {
+            saldoElement.textContent = formatearMoneda(saldoFinal);
+        }
+    }
+
+    requestAnimationFrame(paso);
+};
+
 const cargarSaldo = async () => {
     try {
         const token = localStorage.getItem('token');
@@ -33,7 +53,7 @@ const cargarSaldo = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            saldoElement.textContent = formatearMoneda(data.saldoDisponible);
+            animarSaldo(Number(data.saldoDisponible));
         } else {
             saldoElement.textContent = 'Error al cargar';
         }
