@@ -8,6 +8,7 @@ import com.alkywall.backend.models.EstadoUsuario;
 import com.alkywall.backend.models.Role;
 import com.alkywall.backend.models.Usuario;
 import com.alkywall.backend.repositories.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,9 +19,11 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,11 +34,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 dto.getApellido(),
                 dto.getEmail(),
                 dto.getDni(),
-                dto.getPassword(), //encriptar
+                passwordEncoder.encode(dto.getPassword()),
                 dto.getTelefono(),
                 Role.CLIENT
         );
-
         Usuario usuarioGuardado = usuarioRepository.save(nuevoUsuario);
 
         return mapearAResponseDTO(usuarioGuardado);
