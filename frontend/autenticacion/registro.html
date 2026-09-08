@@ -18,33 +18,38 @@
         <h1>Registrate en Alkywall</h1>
     </div>
     <form id="registroForm" action="">
-        <label for="nombre">Nombre: </label>
+        <label for="nombre">Nombre <span class="requerido">*</span></label>
         <input type="text" id="nombre" name="nombre" placeholder="Juan">
         <div id="nombreError" class="error">El nombre no puede contener números ni símbolos.</div>
         <div id="nombreErrorVacio" class="error">El nombre no puede estar vacío.</div>
 
-        <label for="apellido">Apellido: </label>
+        <label for="apellido">Apellido <span class="requerido">*</span></label>
         <input type="text" id="apellido" name="apellido" placeholder="Perez">
         <div id="apellidoError" class="error">El apellido no puede contener números ni símbolos.</div>
         <div id="apellidoErrorVacio" class="error">El apellido no puede estar vacío.</div>
 
-        <label for="documento">Documento: </label>
+        <label for="documento">Documento <span class="requerido">*</span></label>
         <input type="text" id="documento" name="documento" placeholder="22334455">
+        <small class="hint">Debe tener 8 números, sin puntos.</small>
         <div id="documentoError" class="error">El documento solo puede contener números.</div>
         <div id="documentoLongitudError" class="error">El documento debe tener 8 números.</div>
 
-        <label for="telefono">Telefono: </label>
+        <label for="telefono">Telefono <span class="requerido">*</span></label>
         <input type="text" id="telefono" name="telefono" placeholder="01122334">
+        <small class="hint">Debe tener 10 números, sin espacios.</small>
         <div id="telefonoError" class="error">El telefono solo puede contener números.</div>
         <div id="telefonoLongitudError" class="error">El telefono debe tener 10 números.</div>
 
-        <label for="email">Email:</label>
+        <label for="email">Email <span class="requerido">*</span></label>
         <input type="text" id="email" name="email" placeholder="correo@gmail.com">
         <div id="emailError" class="error">Email Inválido</div>
 
-        <label for="password">Contraseña:</label>
+        <label for="password">Contraseña <span class="requerido">*</span></label>
         <input type="password" id="password" name="password" placeholder="********">
+        <small class="hint">Mínimo 8 caracteres.</small>
         <div id="passwordError" class="error">La contraseña debe tener al menos 8 caracteres.</div>
+
+        <p class="nota-requeridos"><span class="requerido">*</span> Campos obligatorios</p>
 
         <button type="submit" class="btn btn-primario" id="btn-registro">Registrarse</button>
 

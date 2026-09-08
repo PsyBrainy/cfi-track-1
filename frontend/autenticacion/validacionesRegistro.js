@@ -29,12 +29,12 @@ form.addEventListener('submit', async function(event) {
 
     // 1. Validar Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailInput.value)) {
-        emailError.style.display = 'block';
-        isValid = false;
-    } else {
-        emailError.style.display = 'none';
-    }
+        if (!emailRegex.test(emailInput.value)) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
 
     // 2. Validar Contraseña
     if (passInput.value.length < 8) {
@@ -45,58 +45,71 @@ form.addEventListener('submit', async function(event) {
     }
 
     // 3. Validar Nombre
-    const regexLetras = /^[a-zA-ZÀ-ÿ\s]+$/;
-    if(nombreInput.value === "") {
-        nombreErrorVacio.style.display = 'block';
-    } else if (!regexLetras.test(nombreInput.value)) {
-        nombreError.style.display = 'block';
-        isValid = false;
-    } else {
-        nombreError.style.display = 'none';
-    }
+     const regexLetras = /^[a-zA-ZÀ-ÿ\s]+$/;
+        if(nombreInput.value === "") {
+            nombreErrorVacio.style.display = 'block';
+            isValid = false;
+        } else if (!regexLetras.test(nombreInput.value)) {
+            nombreErrorVacio.style.display = 'none';
+            nombreError.style.display = 'block';
+            isValid = false;
+        } else {
+            nombreErrorVacio.style.display = 'none';
+            nombreError.style.display = 'none';
+        }
 
     // 4. Validar Apellido
     if(apellidoInput.value === "") {
-        apellidoErrorVacio.style.display = 'block';
-    } else if (!regexLetras.test(apellidoInput.value)) {
-        apellidoError.style.display = 'block';
-        isValid = false;
-    } else {
-        apellidoError.style.display = 'none';
-    }
+            apellidoErrorVacio.style.display = 'block';
+            isValid = false;
+        } else if (!regexLetras.test(apellidoInput.value)) {
+            apellidoErrorVacio.style.display = 'none';
+            apellidoError.style.display = 'block';
+            isValid = false;
+        } else {
+            apellidoErrorVacio.style.display = 'none';
+            apellidoError.style.display = 'none';
+        }
 
     // 5. Validar Documento
-    if(documentoInput.value.length !== 8) {
-        documentoLongitudError.style.display = 'block';
-        isValid = false;
-    } else if (regexLetras.test(documentoInput.value)) {
-        documentoError.style.display = 'block';
-        isValid = false;
-    } else {
-        documentoError.style.display = 'none';
-    }
+    const regexSoloNumeros = /^\d+$/;
+        if(documentoInput.value.length !== 8) {
+            documentoLongitudError.style.display = 'block';
+            documentoError.style.display = 'none';
+            isValid = false;
+        } else if (!regexSoloNumeros.test(documentoInput.value)) {
+            documentoLongitudError.style.display = 'none';
+            documentoError.style.display = 'block';
+            isValid = false;
+        } else {
+            documentoLongitudError.style.display = 'none';
+            documentoError.style.display = 'none';
+        }
 
     // 6. Validar Telefono
     if(telefonoInput.value.length !== 10) {
-        telefonoLongitudError.style.display = 'block';
-        isValid = false;
-    } else if (regexLetras.test(telefonoInput.value)) {
-        telefonoError.style.display = 'block';
-        isValid = false;
-    } else {
-        telefonoError.style.display = 'none';
-    }
+            telefonoLongitudError.style.display = 'block';
+            telefonoError.style.display = 'none';
+            isValid = false;
+        } else if (!regexSoloNumeros.test(telefonoInput.value)) {
+            telefonoLongitudError.style.display = 'none';
+            telefonoError.style.display = 'block';
+            isValid = false;
+        } else {
+            telefonoLongitudError.style.display = 'none';
+            telefonoError.style.display = 'none';
+        }
 
     // 7. Si es válido, acceder
     if (isValid) {
-        const userData = {
-            nombre: nombreInput.value,
-            apellido: apellidoInput.value,
-            dni: documentoInput.value,
-            email: emailInput.value,
-            password: passInput.value,
-            telefono: telefonoInput.value,
-        };
+            const userData = {
+                nombre: nombreInput.value,
+                apellido: apellidoInput.value,
+                dni: documentoInput.value,
+                email: emailInput.value,
+                password: passInput.value,
+                telefono: telefonoInput.value,
+            };
 
         registroBtn.disabled = true;
         registroBtn.textContent = 'Registrando...';

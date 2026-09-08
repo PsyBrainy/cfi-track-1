@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrar Usuarios - Alkywall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="usuarios.module.css">
+</head>
+<body>
+<main class="usuarios-container">
+    <a href="../dashboard.html" class="usuarios-volver">&larr; Volver al dashboard</a>
+    <h1 class="usuarios-titulo">👥 Administración de Usuarios</h1>
+    <p class="usuarios-mensaje" id="usuarios-mensaje-global"></p>
+
+    <section class="usuarios-card">
+        <h2 id="form-titulo" class="usuarios-card-titulo">Crear usuario</h2>
+        <form id="form-usuario" class="usuarios-form">
+            <input type="hidden" id="usuario-id" value="">
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div>
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" required>
+            </div>
+            <div>
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" name="telefono">
+            </div>
+            <div id="campo-password">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="campo-full">
+                <span class="usuarios-mensaje" id="form-mensaje"></span>
+                <button type="submit" class="usuarios-boton" id="btn-guardar">Crear usuario</button>
+                <button type="button" class="usuarios-boton secundario usuarios-oculto" id="btn-cancelar-edicion">Cancelar edición</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="usuarios-card">
+        <h2 class="usuarios-card-titulo">Listado de usuarios</h2>
+        <div class="usuarios-tabla-wrapper">
+            <table class="usuarios-tabla">
+                <thead>
+                <tr>
+                    <th>ID</th><th>Nombre</th><th>Email</th><th>DNI</th><th>Rol</th><th>Estado</th><th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="usuarios-tbody"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script src="usuarios.js"></script>
+</body>
+</html>

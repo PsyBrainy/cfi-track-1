@@ -8,7 +8,7 @@ import java.util.List;
 public interface ITransaccionService {
     void realizarDeposito(String userEmail, BigDecimal monto);
 
-    void realizarTransferencia(String email, String cbu, String alias, BigDecimal monto);
+    void realizarTransferencia(String email, String alias, String cbu, BigDecimal monto);
 
     List<TransaccionResumenDTO> obtenerHistorialUsuario(String userEmail);
 

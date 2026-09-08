@@ -100,7 +100,7 @@ ul {
   cursor: pointer;
   display: inline-block;
   border: 1px solid transparent;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primario {
@@ -110,6 +110,12 @@ ul {
 
 .btn-primario:hover {
   background-color: var(--color-primario-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+}
+
+.btn-primario:active {
+  transform: translateY(0);
 }
 
 .btn-secundario {

@@ -103,7 +103,9 @@ form.addEventListener('submit', async function (evento) {
 
         mensaje.textContent = '¡Transferencia realizada con éxito!';
         mensaje.className = 'transferencia-mensaje transferencia-exito';
-        alert('Transferencia enviada correctamente.');
+        if (typeof mostrarToast === 'function') {
+            mostrarToast('Transferencia enviada correctamente.', 'exito');
+        }
         form.reset();
     } catch (error) {
         console.error('Error en la transferencia:', error);

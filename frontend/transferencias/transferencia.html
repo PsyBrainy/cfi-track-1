@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Enviar Dinero - Alkywall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="transferencia.module.css">
+    <link rel="stylesheet" href="../shared/toast.css">
 </head>
 <body>
 <main class="transferencia-container">
     <a href="../dashboard.html" class="transferencia-volver">&larr; Volver al dashboard</a>
 
     <section class="transferencia-card">
-        <h1 class="transferencia-titulo">Enviar dinero</h1>
+        <h1 class="transferencia-titulo">💸 Enviar dinero</h1>
         <p class="transferencia-subtitulo">Transferí saldo a otro usuario de Alkywall.</p>
 
         <form id="form-transferencia" novalidate>
@@ -41,6 +46,7 @@
         </form>
     </section>
 </main>
+<script src="../shared/toast.js"></script>
 <script src="transferencia.js"></script>
 </body>
 </html>

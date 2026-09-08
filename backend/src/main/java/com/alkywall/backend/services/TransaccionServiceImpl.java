@@ -58,13 +58,13 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
         if(alias != null && !alias.isBlank()) {
             cuentaDestino = cuentaRepository.findByAlias(alias)
-                .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
         } else if (cbu != null && !cbu.isBlank()) {
             cuentaDestino = cuentaRepository.findByCbu(cbu)
-                .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Cuenta destino no encontrada"));
         } else {
             throw new IllegalArgumentException(
-                "Debe proporcionar un alias o un CBU"
+                    "Debe proporcionar un alias o un CBU"
             );
         }
 
@@ -115,7 +115,7 @@ public class TransaccionServiceImpl implements ITransaccionService {
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<TransaccionResumenDTO> obtenerHistorialUsuario(String userEmail) {
         Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
-            .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
 
         return transaccionRepository.obtenerHistorialPorCuenta(cuenta.getIdCuenta());
     }
@@ -124,7 +124,7 @@ public class TransaccionServiceImpl implements ITransaccionService {
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<ReporteGastosDTO> obtenerReporteGastosUsuario(String userEmail) {
         Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
-            .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
 
         return transaccionRepository.obtenerTotalAgrupadoPorTipo(cuenta.getIdCuenta());
     }

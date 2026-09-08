@@ -5,7 +5,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transacciones")
+@Table(name = "transacciones", indexes = {
+        @Index(name = "idx_cuenta_origen_fecha", columnList = "id_cuenta_origen, fecha_hora"),
+        @Index(name = "idx_cuenta_destino_fecha", columnList = "id_cuenta_destino, fecha_hora")
+})
 public class Transaccion {
 
     @Id
