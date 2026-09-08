@@ -44,6 +44,46 @@ form {
     }
 }
 
+form.form-grid {
+    width: 100%;
+    max-width: 520px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem 1rem;
+}
+
+form.form-grid .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+}
+
+form.form-grid .campo-full {
+    grid-column: 1 / -1;
+}
+
+form.form-grid label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+form.form-grid input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-ancho {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    form.form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .m-t-50{
     margin-top: 50px;
 }

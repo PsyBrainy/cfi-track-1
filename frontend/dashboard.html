@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="shared/toast.css">
 </head>
 <body>
+<header class="dashboard-header">
+    <span class="dashboard-logo">Alkywall</span>
+    <button type="button" class="dashboard-logout" id="btn-logout">Cerrar sesión</button>
+</header>
 <main class="dashboard-container">
     <section class="balance-card">
         <p>Tu saldo actual</p>
@@ -26,28 +30,30 @@
         </div>
     </section>
 
-    <!-- Componente aislado: Depositar Dinero -->
-    <section class="deposito-container">
-        <h2 class="deposito-titulo">💰 Depositar dinero</h2>
-        <p class="deposito-subtitulo">Cargá saldo a tu cuenta Alkywall.</p>
+    <div class="dashboard-grid">
+        <!-- Componente aislado: Depositar Dinero -->
+        <section class="deposito-container">
+            <h2 class="deposito-titulo">💰 Depositar dinero</h2>
+            <p class="deposito-subtitulo">Cargá saldo a tu cuenta Alkywall.</p>
 
-        <div class="deposito-campo">
-            <label for="deposito-monto">Monto a depositar</label>
-            <input type="number" id="deposito-monto" name="monto" placeholder="0.00" min="1" step="0.01">
-            <span class="deposito-error" id="deposito-error"></span>
-        </div>
+            <div class="deposito-campo">
+                <label for="deposito-monto">Monto a depositar</label>
+                <input type="number" id="deposito-monto" name="monto" placeholder="0.00" min="1" step="0.01">
+                <span class="deposito-error" id="deposito-error"></span>
+            </div>
 
-        <div class="deposito-notificacion" id="deposito-notificacion"></div>
+            <div class="deposito-notificacion" id="deposito-notificacion"></div>
 
-        <button type="button" class="deposito-boton" id="btn-confirmar-deposito" disabled>Confirmar Depósito</button>
-    </section>
+            <button type="button" class="deposito-boton" id="btn-confirmar-deposito" disabled>Confirmar Depósito</button>
+        </section>
 
-    <!-- Componente aislado: Reporte de Gastos -->
-    <section class="reporte-container">
-        <h2 class="reporte-titulo">📊 Reporte de gastos</h2>
-        <p class="reporte-mensaje" id="reporte-mensaje"></p>
-        <div class="reporte-barras" id="reporte-barras"></div>
-    </section>
+        <!-- Componente aislado: Reporte de Gastos -->
+        <section class="reporte-container">
+            <h2 class="reporte-titulo">📊 Reporte de gastos</h2>
+            <p class="reporte-mensaje" id="reporte-mensaje"></p>
+            <div class="reporte-barras" id="reporte-barras"></div>
+        </section>
+    </div>
 </main>
 <script src="shared/toast.js"></script>
 <script src="dashboard.js"></script>

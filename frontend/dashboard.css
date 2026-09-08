@@ -1,14 +1,53 @@
 /* Clases aisladas para evitar colisiones con el formulario de registro */
+
+.dashboard-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-tarjeta, #ffffff);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-family: var(--fuente-principal, Arial, sans-serif);
+}
+
+.dashboard-logo {
+    font-family: var(--fuente-titulo, inherit);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-primario, #4f46e5);
+}
+
+.dashboard-logout {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-borde, #e2e8f0);
+    background-color: transparent;
+    color: var(--color-texto-suave, #6c757d);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-logout:hover {
+    border-color: var(--color-error, #ef4444);
+    color: var(--color-error, #ef4444);
+    transform: translateY(-1px);
+}
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     min-height: 100vh;
-    background-color: var(--color-fondo, #f4f7f6);
+    background: linear-gradient(180deg, var(--color-fondo, #f4f7f6) 0%, #eef0fb 100%);
     font-family: var(--fuente-principal, Arial, sans-serif);
     margin: 0;
-    padding: 2.5rem 1rem;
+    padding: 2rem 1rem 3rem;
     box-sizing: border-box;
 }
 
@@ -19,7 +58,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
-    max-width: 480px;
+    max-width: 900px;
     box-sizing: border-box;
     animation: dashboard-aparecer 0.4s ease both;
 }
@@ -71,6 +110,14 @@
     transform: translateY(0);
 }
 
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 900px;
+}
+
 @keyframes dashboard-aparecer {
     from {
         opacity: 0;
@@ -82,17 +129,28 @@
     }
 }
 
-.dashboard-container > section:nth-of-type(2) {
+.dashboard-grid > section:nth-of-type(1) {
     animation: dashboard-aparecer 0.4s ease 0.08s both;
 }
 
-.dashboard-container > section:nth-of-type(3) {
+.dashboard-grid > section:nth-of-type(2) {
     animation: dashboard-aparecer 0.4s ease 0.16s both;
 }
 
+@media (min-width: 720px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+}
+
 @media (max-width: 480px) {
+    .dashboard-header {
+        padding: 0.85rem 1rem;
+    }
+
     .dashboard-container {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1rem 2.5rem;
     }
 
     .balance-card {

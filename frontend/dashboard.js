@@ -63,4 +63,14 @@ const cargarSaldo = async () => {
     }
 };
 
-document.addEventListener('DOMContentLoaded', cargarSaldo);
+document.addEventListener('DOMContentLoaded', function () {
+    cargarSaldo();
+
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', function () {
+            localStorage.removeItem('token');
+            window.location.href = 'autenticacion/login.html';
+        });
+    }
+});
