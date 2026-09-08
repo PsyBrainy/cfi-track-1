@@ -16,15 +16,15 @@ form.addEventListener('submit', async function(event) {
 
     // 1. Validar Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailInput.value)) {
-        emailError.style.display = 'block';
-        isValid = false;
-    } else {
-        emailError.style.display = 'none';
-    }
+        if (!emailRegex.test(emailInput.value)) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
 
     // 2. Validar Contraseña
-    if (passInput.value.length < 4) {
+    if (passInput.value.length < 6) {
         passError.style.display = 'block';
         isValid = false;
     } else {
