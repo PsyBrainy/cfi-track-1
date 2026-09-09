@@ -5,8 +5,6 @@
 // El backend identifica la cuenta a partir del email del JWT, no hace
 // falta mandar cuentaId.
 
-const API_BASE_URL = 'http://localhost:8080/api';
-
 const montoInput = document.getElementById('deposito-monto');
 const errorMonto = document.getElementById('deposito-error');
 const notificacion = document.getElementById('deposito-notificacion');

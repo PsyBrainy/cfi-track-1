@@ -7,17 +7,8 @@
 // Nota: por ahora el historial solo incluye transferencias; los depositos
 // todavia no se listan aca (pendiente del lado del backend).
 
-const API_BASE_URL = 'http://localhost:8080/api';
-
 const contenedor = document.getElementById('historial-lista');
 const mensaje = document.getElementById('historial-mensaje');
-
-function formatearMoneda(monto) {
-    return new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS'
-    }).format(Math.abs(monto));
-}
 
 function formatearFecha(fechaISO) {
     const fecha = new Date(fechaISO);
