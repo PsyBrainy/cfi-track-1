@@ -5,8 +5,6 @@
 // PUT    /api/usuarios/{id}    -> editar  { nombre, apellido, telefono }
 // DELETE /api/usuarios/{id}    -> baja lógica (estado INACTIVO)
 
-const API_BASE_URL = 'http://localhost:8080/api';
-
 const mensajeGlobal = document.getElementById('usuarios-mensaje-global');
 const tbody = document.getElementById('usuarios-tbody');
 const form = document.getElementById('form-usuario');

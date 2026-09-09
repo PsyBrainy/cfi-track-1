@@ -44,13 +44,6 @@ function mostrarVistaSegunRol() {
     }
 }
 
-const formatearMoneda = (monto) => {
-    return new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS'
-    }).format(monto);
-};
-
 const animarSaldo = (saldoFinal) => {
     const duracionMs = 700;
     const inicio = performance.now();

@@ -6,8 +6,6 @@
 // asi que se calcula aca en base al total de cada categoria sobre la
 // suma de todas.
 
-const API_BASE_URL = 'http://localhost:8080/api';
-
 const contenedorBarras = document.getElementById('reporte-barras');
 const mensajeReporte = document.getElementById('reporte-mensaje');
 
@@ -16,13 +14,6 @@ const etiquetasTipo = {
     EXTRACCION: 'Extracciones',
     PAGO: 'Pagos'
 };
-
-function formatearMoneda(monto) {
-    return new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS'
-    }).format(monto);
-}
 
 function calcularPorcentajes(datos) {
     const totalGeneral = datos.reduce((acumulado, item) => acumulado + Number(item.total), 0);
