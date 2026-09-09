@@ -17,7 +17,7 @@
 
 <header class="dashboard-topbar">
     <span class="dashboard-topbar-brand">Alkywall</span>
-    <button type="button" id="btn-logout-dashboard" class="dashboard-topbar-logout">Cerrar Sesión</button>
+    <button type="button" id="btn-logout-dashboard" class="btn btn-secundario">Cerrar Sesión</button>
 </header>
 
 <main class="dashboard-container">
@@ -36,13 +36,13 @@
 
             <p class="balance-alias" id="alias-cuenta">Alias</p>
             <div class="dashboard-acciones">
-                <a href="transferencias/transferencia.html" class="dashboard-accion">💸 Enviar dinero</a>
-                <a href="movimientos/historial.html" class="dashboard-accion">📋 Ver movimientos</a>
+                <a href="transferencias/transferencia.html" class="dashboard-accion"><i data-lucide="arrow-right-left"></i> Enviar dinero</a>
+                <a href="movimientos/historial.html" class="dashboard-accion"><i data-lucide="list"></i> Ver movimientos</a>
             </div>
         </section>
 
         <section class="deposito-container">
-            <h2 class="deposito-titulo">💰 Depositar dinero</h2>
+            <h2 class="deposito-titulo"><i data-lucide="wallet"></i> Depositar dinero</h2>
             <p class="deposito-subtitulo">Cargá saldo a tu cuenta Alkywall.</p>
 
             <div class="deposito-campo">
@@ -57,7 +57,7 @@
         </section>
 
         <section class="reporte-container">
-            <h2 class="reporte-titulo">📊 Reporte de gastos</h2>
+            <h2 class="reporte-titulo"><i data-lucide="pie-chart"></i> Reporte de gastos</h2>
             <p class="reporte-mensaje" id="reporte-mensaje"></p>
             <div class="reporte-barras" id="reporte-barras"></div>
         </section>
@@ -69,13 +69,14 @@
             <p class="admin-card-etiqueta">Panel de administración</p>
             <h2 class="admin-card-titulo">Gestioná los usuarios de Alkywall</h2>
             <p class="admin-card-subtitulo">Como administrador no tenés acceso a saldo, depósitos ni transferencias.</p>
-            <a href="admin/usuarios.html" class="dashboard-accion dashboard-accion-admin">👥 Administrar usuarios</a>
+            <a href="admin/usuarios.html" class="dashboard-accion dashboard-accion-admin"><i data-lucide="users"></i> Administrar usuarios</a>
         </section>
     </div>
 
 </main>
 <script src="shared/utils.js"></script>
 <script src="shared/toast.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 <script src="dashboard.js"></script>
 <script src="reportes/reporte.js"></script>
 <script src="deposito/deposito.js"></script>
