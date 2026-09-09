@@ -33,6 +33,43 @@ const vistaCliente = document.getElementById('vista-cliente');
 const vistaAdmin = document.getElementById('vista-admin');
 const saldoElement = document.getElementById('saldo-disponible');
 const aliasElement = document.getElementById('alias-cuenta');
+const btnArs = document.getElementById('btn-ars');
+const btnUsd = document.getElementById('btn-usd');
+const cotizacionElement = document.getElementById('cotizacion-dolar');
+
+// Variables para la conversion de divisas
+let saldo = 0;
+let saldoMostrado = 0;
+let cotizacionDolar = 0;
+let monedaActual = 'ARS';
+let mostrandoUSD = false;
+
+const mostrarSaldo = (animar = false) => {
+
+    if (cotizacionDolar <= 0) {
+        return;
+    }
+
+    let nuevoSaldo;
+    let moneda;
+
+    if (mostrandoUSD) {
+        nuevoSaldo = saldo / cotizacionDolar;
+        moneda = 'USD';
+    } else {
+        nuevoSaldo = saldo;
+        moneda = 'ARS';
+    }
+
+    if (animar) {
+        animarSaldo(saldoMostrado, nuevoSaldo, moneda);
+    } else {
+        saldoElement.textContent =
+            formatearMoneda(nuevoSaldo, moneda);
+    }
+
+    saldoMostrado = nuevoSaldo;
+};
 
 function mostrarVistaSegunRol() {
     if (rolUsuario === 'ADMIN') {
@@ -44,19 +81,21 @@ function mostrarVistaSegunRol() {
     }
 }
 
-const animarSaldo = (saldoFinal) => {
+const animarSaldo = (saldoInicial, saldoFinal, moneda) => {
     const duracionMs = 700;
     const inicio = performance.now();
 
     function paso(ahora) {
         const progreso = Math.min((ahora - inicio) / duracionMs, 1);
-        const valorActual = saldoFinal * progreso;
-        saldoElement.textContent = formatearMoneda(valorActual);
+        const valorActual = saldoInicial + (saldoFinal - saldoInicial) * progreso;
+
+        saldoElement.textContent = formatearMoneda(valorActual, 'ARS');
 
         if (progreso < 1) {
             requestAnimationFrame(paso);
         } else {
-            saldoElement.textContent = formatearMoneda(saldoFinal);
+            saldoElement.textContent =
+                formatearMoneda(saldoFinal, moneda);
         }
     }
 
@@ -81,7 +120,17 @@ const cargarCuenta = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            animarSaldo(Number(data.saldoDisponible));
+
+            saldo = Number(data.saldoDisponible);
+            cotizacionDolar = Number(data.cotizacionDolar);
+            monedaActual = data.moneda;
+
+            saldoMostrado = 0;
+
+            mostrarSaldo(true);
+
+            cotizacionElement.textContent = `1 USD = ${formatearMoneda(cotizacionDolar, 'ARS')}`;
+
             aliasElement.textContent = data.alias ? `Alias: ${data.alias}` : '';
         } else {
             saldoElement.textContent = 'Error al cargar';
@@ -91,6 +140,34 @@ const cargarCuenta = async () => {
         saldoElement.textContent = 'Error de conexión';
     }
 };
+
+btnArs.addEventListener('click', () => {
+
+    if (!mostrandoUSD) {
+        return;
+    }
+
+    mostrandoUSD = false;
+
+    btnArs.classList.add('activo');
+    btnUsd.classList.remove('activo');
+
+    mostrarSaldo(true);
+});
+
+btnUsd.addEventListener('click', () => {
+
+    if (mostrandoUSD || cotizacionDolar <= 0) {
+        return;
+    }
+
+    mostrandoUSD = true;
+
+    btnUsd.classList.add('activo');
+    btnArs.classList.remove('activo');
+
+    mostrarSaldo(true);
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     mostrarVistaSegunRol();

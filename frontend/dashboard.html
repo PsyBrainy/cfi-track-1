@@ -21,7 +21,14 @@
         <section class="balance-card">
             <p>Tu saldo actual</p>
             <h2 id="saldo-disponible">Cargando...</h2>
-            <p class="balance-alias" id="alias-cuenta"></p>
+
+            <div class="moneda-switch">
+                <button id="btn-ars" class="moneda-btn activo">ARS</button>
+                <button id="btn-usd" class="moneda-btn">USD</button>
+            </div>
+            <p id="cotizacion-dolar" class="cotizacion-dolar">Cargando...</p>
+
+            <p class="balance-alias" id="alias-cuenta">Alias</p>
             <div class="dashboard-acciones">
                 <a href="transferencias/transferencia.html" class="dashboard-accion">💸 Enviar dinero</a>
                 <a href="movimientos/historial.html" class="dashboard-accion">📋 Ver movimientos</a>

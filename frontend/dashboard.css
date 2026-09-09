@@ -35,6 +35,10 @@
     width: 100%;
     max-width: 480px;
     box-sizing: border-box;
+}
+
+/* Fix animation layout shift */
+#vista-admin:not(.dashboard-oculto) .admin-card {
     animation: dashboard-aparecer 0.4s ease both;
 }
 
@@ -118,6 +122,46 @@
     margin: 0;
     color: var(--color-texto-suave, #6c757d);
     font-size: 0.9rem;
+}
+
+.moneda-switch {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0 5px;
+}
+
+.moneda-btn {
+    padding: 6px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.moneda-btn:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.moneda-btn:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.moneda-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.moneda-btn.activo {
+    background-color: var(--color-primario, #ffffff);
+    color: white;
+    border-color: #333;
+}
+
+.cotizacion-dolar {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #777;
 }
 
 @keyframes dashboard-aparecer {
