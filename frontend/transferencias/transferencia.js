@@ -40,8 +40,8 @@ function validarFormulario(alias, cbu, monto) {
         esValido = false;
     }
 
-    if (!monto || Number(monto) <= 0) {
-        errorMonto.textContent = 'Ingresá un monto mayor a cero.';
+    if (!monto || Number(monto) < 1) {
+        errorMonto.textContent = 'El monto mínimo a transferir es $1.';
         montoInput.classList.add('input-error');
         esValido = false;
     }
@@ -114,5 +114,23 @@ form.addEventListener('submit', async function (evento) {
     } finally {
         btnTransferir.disabled = false;
         btnTransferir.textContent = 'Transferir';
+    }
+});
+
+aliasInput.addEventListener('input', function () {
+    if (aliasInput.value.trim().length > 0) {
+        cbuInput.value = '';
+        cbuInput.disabled = true;
+    } else {
+        cbuInput.disabled = false;
+    }
+});
+
+cbuInput.addEventListener('input', function () {
+    if (cbuInput.value.trim().length > 0) {
+        aliasInput.value = '';
+        aliasInput.disabled = true;
+    } else {
+        aliasInput.disabled = false;
     }
 });

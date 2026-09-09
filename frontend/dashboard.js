@@ -21,6 +21,7 @@ const token = localStorage.getItem('token');
 
 if (!token) {
     window.location.href = 'autenticacion/login.html';
+    throw new Error('Redirigiendo a login: no hay token.');
 }
 
 const payloadJwt = token ? decodificarJwt(token) : null;
@@ -175,4 +176,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (rolUsuario !== 'ADMIN') {
         cargarCuenta();
     }
+    const btnLogoutDashboard = document.getElementById('btn-logout-dashboard');
+        if (btnLogoutDashboard) {
+            btnLogoutDashboard.addEventListener('click', function () {
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+        }
+
+        lucide.createIcons();
 });

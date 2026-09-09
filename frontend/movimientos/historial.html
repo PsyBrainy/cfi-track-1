@@ -14,13 +14,17 @@
 <main class="historial-container">
     <a href="../dashboard.html" class="historial-volver">&larr; Volver al dashboard</a>
 
-    <h1 class="historial-titulo">📋 Tus movimientos</h1>
+    <h1 class="historial-titulo"><i data-lucide="clipboard-list"></i> Tus movimientos</h1>
 
     <p class="historial-mensaje" id="historial-mensaje"></p>
 
     <div class="historial-lista" id="historial-lista"></div>
 </main>
 <script src="../shared/utils.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
 <script src="historial.js"></script>
 </body>
 </html>

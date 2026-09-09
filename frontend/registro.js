@@ -103,6 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const cuerpo = await respuesta.json().catch(() => ({}));
 
+    if (respuesta.status === 422) {
+      throw new Error(cuerpo.message || 'No se pudo procesar la solicitud. Verificá los datos ingresados.');
+    }
+
     if (!respuesta.ok) {
       throw new Error(extraerMensajeError(cuerpo));
     }

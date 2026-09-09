@@ -9,6 +9,14 @@ const serverError = document.getElementById('serverError');
 // URL del backend.
 const API_URL = 'http://localhost:8080/api/auth/login';
 
+[emailInput, passInput].forEach(input => {
+    input.addEventListener('input', () => {
+        emailError.style.display = 'none';
+        passError.style.display = 'none';
+        serverError.style.display = 'none';
+    });
+});
+
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
