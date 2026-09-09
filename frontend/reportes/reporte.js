@@ -17,12 +17,12 @@ const etiquetasTipo = {
     PAGO: 'Pagos'
 };
 
-/*function formatearMoneda(monto) {
+function formatearMoneda(monto) {
     return new Intl.NumberFormat('es-AR', {
         style: 'currency',
         currency: 'ARS'
     }).format(monto);
-}*/
+}
 
 function calcularPorcentajes(datos) {
     const totalGeneral = datos.reduce((acumulado, item) => acumulado + Number(item.total), 0);
@@ -69,6 +69,10 @@ function crearBarraGasto(item) {
 }
 
 async function cargarReporteGastos() {
+    if (window.ALKYWALL_ROLE === 'ADMIN') {
+        return;
+    }
+
     const token = localStorage.getItem('token');
 
     if (!token) {

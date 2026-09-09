@@ -7,8 +7,8 @@
 .deposito-container {
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    padding: 1.75rem;
     margin-top: 1.5rem;
     width: 100%;
     max-width: 480px;
@@ -114,7 +114,6 @@
     cursor: not-allowed;
 }
 
-/* Responsive: pantallas móviles */
 @media (max-width: 480px) {
     .deposito-container {
         padding: 1.1rem;

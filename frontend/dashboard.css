@@ -12,11 +12,25 @@
     box-sizing: border-box;
 }
 
-.balance-card {
+.dashboard-oculto {
+    display: none !important;
+}
+
+#vista-cliente,
+#vista-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.balance-card,
+.admin-card {
     background-color: var(--color-tarjeta, #ffffff);
     padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     text-align: center;
     width: 100%;
     max-width: 480px;
@@ -34,9 +48,18 @@
 
 .balance-card h2 {
     margin: 15px 0 0 0;
-    color: var(--color-texto, #212529);
+    color: var(--color-primario, #4f46e5);
     font-size: 2.8rem;
     font-family: var(--fuente-titulo, inherit);
+}
+
+.balance-alias {
+    margin: 0.5rem 0 0 0 !important;
+    color: var(--color-texto-suave, #6c757d) !important;
+    font-size: 0.85rem !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    min-height: 1.1rem;
 }
 
 .dashboard-acciones {
@@ -71,6 +94,32 @@
     transform: translateY(0);
 }
 
+.dashboard-accion-admin {
+    margin-top: 1.5rem;
+}
+
+.admin-card-etiqueta {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-primario, #4f46e5);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-card-titulo {
+    margin: 0 0 0.75rem 0;
+    color: var(--color-texto, #212529);
+    font-family: var(--fuente-titulo, inherit);
+    font-size: 1.6rem;
+}
+
+.admin-card-subtitulo {
+    margin: 0;
+    color: var(--color-texto-suave, #6c757d);
+    font-size: 0.9rem;
+}
+
 @keyframes dashboard-aparecer {
     from {
         opacity: 0;
@@ -82,11 +131,11 @@
     }
 }
 
-.dashboard-container > section:nth-of-type(2) {
+#vista-cliente > section:nth-of-type(2) {
     animation: dashboard-aparecer 0.4s ease 0.08s both;
 }
 
-.dashboard-container > section:nth-of-type(3) {
+#vista-cliente > section:nth-of-type(3) {
     animation: dashboard-aparecer 0.4s ease 0.16s both;
 }
 
@@ -95,7 +144,8 @@
         padding: 1.5rem 1rem;
     }
 
-    .balance-card {
+    .balance-card,
+    .admin-card {
         padding: 1.75rem;
     }
 
