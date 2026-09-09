@@ -5,7 +5,7 @@
 // El backend identifica la cuenta a partir del email del JWT, no hace
 // falta mandar cuentaId.
 
-//const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'http://localhost:8080/api';
 
 const montoInput = document.getElementById('deposito-monto');
 const errorMonto = document.getElementById('deposito-error');
@@ -37,51 +37,53 @@ function mostrarNotificacion(texto, tipo) {
     notificacion.className = `deposito-notificacion ${tipo}`;
 }
 
-montoInput.addEventListener('input', validarMonto);
+if (window.ALKYWALL_ROLE !== 'ADMIN') {
+    montoInput.addEventListener('input', validarMonto);
 
-btnConfirmar.addEventListener('click', async function () {
-    if (!validarMonto()) {
-        return;
-    }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-        mostrarNotificacion('Tenés que iniciar sesión para depositar dinero.', 'deposito-error-general');
-        return;
-    }
-
-    const monto = Number(montoInput.value);
-
-    btnConfirmar.disabled = true;
-    btnConfirmar.textContent = 'Depositando...';
-
-    try {
-        const respuesta = await fetch(`${API_BASE_URL}/transacciones/deposito`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ monto: monto })
-        });
-
-        if (!respuesta.ok) {
-            const cuerpo = await respuesta.json().catch(() => ({}));
-            mostrarNotificacion(cuerpo.message || 'No se pudo completar el depósito.', 'deposito-error-general');
+    btnConfirmar.addEventListener('click', async function () {
+        if (!validarMonto()) {
             return;
         }
 
-        mostrarNotificacion('¡Depósito realizado con éxito!', 'deposito-exito');
-        montoInput.value = '';
-
-        if (typeof cargarSaldo === 'function') {
-            cargarSaldo();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            mostrarNotificacion('Tenés que iniciar sesión para depositar dinero.', 'deposito-error-general');
+            return;
         }
-    } catch (error) {
-        console.error('Error al depositar:', error);
-        mostrarNotificacion('Error de conexión. Intentá nuevamente.', 'deposito-error-general');
-    } finally {
-        btnConfirmar.disabled = montoInput.value === '' || Number(montoInput.value) <= 0;
-        btnConfirmar.textContent = 'Confirmar Depósito';
-    }
-});
+
+        const monto = Number(montoInput.value);
+
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = 'Depositando...';
+
+        try {
+            const respuesta = await fetch(`${API_BASE_URL}/transacciones/deposito`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ monto: monto })
+            });
+
+            if (!respuesta.ok) {
+                const cuerpo = await respuesta.json().catch(() => ({}));
+                mostrarNotificacion(cuerpo.message || 'No se pudo completar el depósito.', 'deposito-error-general');
+                return;
+            }
+
+            mostrarNotificacion('¡Depósito realizado con éxito!', 'deposito-exito');
+            montoInput.value = '';
+
+            if (typeof cargarCuenta === 'function') {
+                cargarCuenta();
+            }
+        } catch (error) {
+            console.error('Error al depositar:', error);
+            mostrarNotificacion('Error de conexión. Intentá nuevamente.', 'deposito-error-general');
+        } finally {
+            btnConfirmar.disabled = montoInput.value === '' || Number(montoInput.value) <= 0;
+            btnConfirmar.textContent = 'Confirmar Depósito';
+        }
+    });
+}

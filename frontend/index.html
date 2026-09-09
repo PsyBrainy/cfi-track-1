@@ -5,178 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Alkywall - Billetera virtual para gestionar tu dinero, tarjetas y pagos.">
     <title>Alkywall - Billetera Virtual</title>
-    <!-- Tipografía Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
-    <!-- Hoja de estilos principal -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Header / Encabezado -->
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <span>Alkywall</span>
-            </div>
-
-            <nav class="nav">
-                <ul class="nav-links">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#funciones">Funciones</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-            </nav>
-
-            <div class="header-buttons">
-                <button class="btn btn-secundario" id="btn-login">Iniciar Sesión</button>
-                <button class="btn btn-primario" id="btn-register">Registrarse</button>
-                <button class="btn btn-secundario" style="display: none" id="btn-logout">Cerrar Sesión</button>
-            </div>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span>Alkywall</span>
         </div>
-    </header>
 
-    <!-- Main / Contenido Principal -->
-    <main>
-        <!-- Sección Hero -->
-        <section class="hero" id="inicio">
-            <div class="container hero-content">
-                <div class="hero-info">
-                    <h1>Manejá tu dinero con <span>Alkywall</span></h1>
-                    <p>
-                        La billetera virtual que te permite gestionar tus cuentas, asociar tarjetas y realizar transferencias de forma rápida y segura.
-                    </p>
-                    <div class="hero-acciones">
-                        <button class="btn btn-primario" id="btn-crear-cuenta">Crear Cuenta</button>
-                        <a href="#funciones" class="btn btn-secundario">Ver Funciones</a>
-                    </div>
-                </div>
+        <nav class="nav">
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#funciones">Funciones</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
 
-                <div class="hero-imagen">
-                    <div class="card-preview">
-                        <h3>Saldo Disponible</h3>
-                        <p class="monto">$ 150.000,00</p>
-                        <ul class="lista-movimientos">
-                            <li>
-                                <span>Carga de saldo</span>
-                                <strong class="ingreso">+ $ 20.000</strong>
-                            </li>
-                            <li>
-                                <span>Pago de servicio</span>
-                                <strong class="egreso">- $ 4.500</strong>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="header-buttons">
+            <a href="autenticacion/login.html" class="btn btn-secundario" id="btn-login">Iniciar Sesión</a>
+            <a href="autenticacion/registro.html" class="btn btn-primario" id="btn-register">Registrarse</a>
+            <button class="btn btn-secundario" style="display: none" id="btn-logout">Cerrar Sesión</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="inicio">
+        <div class="container hero-content">
+            <div class="hero-info">
+                <h1>Manejá tu dinero con <span>Alkywall</span></h1>
+                <p>
+                    La billetera virtual que te permite gestionar tus cuentas, asociar tarjetas y realizar transferencias de forma rápida y segura.
+                </p>
             </div>
-        </section>
 
-        <!-- Sección de Funciones -->
-        <section class="funciones" id="funciones">
-            <div class="container">
-                <h2>Funciones Principales</h2>
-                <div class="grid-funciones">
-                    <div class="tarjeta-funcion">
-                        <h3>💳 Tarjetas Físicas y Virtuales</h3>
-                        <p>Asociá tus tarjetas para realizar compras en línea y presenciales sin complicaciones.</p>
-                    </div>
-
-                    <div class="tarjeta-funcion">
-                        <h3>💸 Transferencias 24/7</h3>
-                        <p>Enviá y recibí dinero al instante entre cuentas Alkywall u otros bancos.</p>
-                    </div>
-
-                    <div class="tarjeta-funcion">
-                        <h3>🔒 Sesión Segura</h3>
-                        <p>Protegemos tus datos y transacciones mediante autenticación segura y JWT.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer / Pie de página -->
-    <footer class="footer" id="contacto">
-        <div class="container">
-            <div class="footer-contenido">
-                <div class="footer-info">
-                    <div class="logo">Alkywall</div>
-                    <p>Tu billetera virtual de confianza.</p>
-                </div>
-                <div class="footer-enlaces">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#funciones">Funciones</a></li>
+            <div class="hero-imagen">
+                <div class="card-preview">
+                    <h3>Saldo Disponible</h3>
+                    <p class="monto">$ 150.000,00</p>
+                    <ul class="lista-movimientos">
+                        <li>
+                            <span>Carga de saldo</span>
+                            <strong class="ingreso">+ $ 20.000</strong>
+                        </li>
+                        <li>
+                            <span>Pago de servicio</span>
+                            <strong class="egreso">- $ 4.500</strong>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-copy">
-                <p>&copy; 2026 Alkywall. Todos los derechos reservados.</p>
+        </div>
+    </section>
+
+    <section class="funciones" id="funciones">
+        <div class="container">
+            <h2>Funciones Principales</h2>
+            <div class="grid-funciones">
+                <div class="tarjeta-funcion">
+                    <h3>💳 Tarjetas Físicas y Virtuales</h3>
+                    <p>Asociá tus tarjetas para realizar compras en línea y presenciales sin complicaciones.</p>
+                </div>
+
+                <div class="tarjeta-funcion">
+                    <h3>💸 Transferencias 24/7</h3>
+                    <p>Enviá y recibí dinero al instante entre cuentas Alkywall u otros bancos.</p>
+                </div>
+
+                <div class="tarjeta-funcion">
+                    <h3>🔒 Sesión Segura</h3>
+                    <p>Protegemos tus datos y transacciones mediante autenticación segura y JWT.</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
+</main>
 
-    <!-- Modal de Registro -->
-    <div class="modal-overlay" id="modal-registro">
-        <div class="modal">
-            <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">&times;</button>
-            <h2>Crear Cuenta</h2>
-            <p class="modal-subtitulo">Registrate para empezar a usar Alkywall.</p>
-
-            <form id="form-registro" novalidate>
-                <div class="campo">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
-                    <span class="error-campo" id="error-nombre"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" placeholder="Tu apellido">
-                    <span class="error-campo" id="error-apellido"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com">
-                    <span class="error-campo" id="error-email"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="dni">DNI</label>
-                    <input type="text" id="dni" name="dni" placeholder="Sin puntos">
-                    <span class="error-campo" id="error-dni"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="telefono">Teléfono (opcional)</label>
-                    <input type="tel" id="telefono" name="telefono" placeholder="Tu teléfono">
-                    <span class="error-campo" id="error-telefono"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres">
-                    <span class="error-campo" id="error-password"></span>
-                </div>
-
-                <div class="campo">
-                    <label for="confirmar-password">Confirmar contraseña</label>
-                    <input type="password" id="confirmar-password" name="confirmar-password" placeholder="Repetí tu contraseña">
-                    <span class="error-campo" id="error-confirmar-password"></span>
-                </div>
-
-                <div class="mensaje-formulario" id="mensaje-registro"></div>
-
-                <button type="submit" class="btn btn-primario btn-block" id="btn-enviar-registro">Registrarme</button>
-            </form>
+<footer class="footer" id="contacto">
+    <div class="container">
+        <div class="footer-contenido">
+            <div class="footer-info">
+                <div class="logo">Alkywall</div>
+                <p>Tu billetera virtual de confianza.</p>
+            </div>
+            <div class="footer-enlaces">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#funciones">Funciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>&copy; 2026 Alkywall. Todos los derechos reservados.</p>
         </div>
     </div>
+</footer>
 
-    <!-- Archivos JavaScript -->
-    <script src="main.js"></script>
-    <script src="registro.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

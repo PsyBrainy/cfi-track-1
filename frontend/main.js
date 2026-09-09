@@ -7,28 +7,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnRegister = document.getElementById('btn-register');
   const btnLogout = document.getElementById('btn-logout');
 
-  if(localStorage.getItem('token') !== null) {
-    btnLogin.style.display = 'none';
-    btnRegister.style.display = 'none';
-    btnLogout.style.display = 'block';
+  if (localStorage.getItem('token') !== null) {
+    if (btnLogin) btnLogin.style.display = 'none';
+    if (btnRegister) btnRegister.style.display = 'none';
+    if (btnLogout) btnLogout.style.display = 'inline-block';
   }
 
-  if (btnLogin) {
-    btnLogin.addEventListener('click', function () {
-      window.location.href = 'autenticacion/login.html';
-    });
-  }
-
-  if (btnRegister) {
-    btnRegister.addEventListener('click', function () {
-      window.location.href = 'autenticacion/registro.html';
-    });
-  }
-
-  if(btnLogout) {
+  if (btnLogout) {
     btnLogout.addEventListener('click', function () {
       localStorage.removeItem('token');
       window.location.href = 'autenticacion/login.html';
-    })
+    });
   }
 });

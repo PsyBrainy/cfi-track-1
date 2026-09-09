@@ -1,12 +1,19 @@
 main{
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 2rem 1rem;
     box-sizing: border-box;
     background-color: var(--color-fondo);
+}
+
+.auth-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .flex-center {
@@ -16,14 +23,15 @@ main{
 }
 
 form {
-    width: 300px;
+    width: 320px;
+    max-width: 90vw;
     display: flex;
     flex-direction: column;
     gap: 10px;
     background-color: var(--color-tarjeta);
     padding: 2rem;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
     animation: auth-aparecer 0.35s ease both;
 
@@ -36,7 +44,6 @@ form {
         font-size: 14px;
         cursor: pointer;
         transition: all 0.3s ease;
-
     }
 
     .btn-register:hover {
@@ -99,5 +106,15 @@ input:focus {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1.25rem 0.75rem;
+    }
+
+    form {
+        padding: 1.5rem;
     }
 }
