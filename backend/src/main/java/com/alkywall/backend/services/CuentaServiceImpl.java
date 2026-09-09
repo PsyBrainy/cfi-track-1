@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class CuentaServiceImpl implements ICuentaService {
 
     private final CuentaRepository cuentaRepository;
+    private final DolarService dolarService;
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository) {
+    public CuentaServiceImpl(CuentaRepository cuentaRepository, DolarService dolarService) {
         this.cuentaRepository = cuentaRepository;
+        this.dolarService = dolarService;
     }
 
     @Override
@@ -41,6 +43,9 @@ public class CuentaServiceImpl implements ICuentaService {
         dto.setAlias(cuenta.getAlias());
         dto.setId_usuario(id);
         dto.setCuentaId(cuenta.getIdCuenta());
+
+        dto.setCotizacionDolar(dolarService.obtenerCotizacion());
+        dto.setFechaCotizacion(dolarService.obtenerFechaCotizacion());
 
         return dto;
     }
