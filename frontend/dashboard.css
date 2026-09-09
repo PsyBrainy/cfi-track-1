@@ -102,6 +102,35 @@
     margin-top: 1.5rem;
 }
 
+.dashboard-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin-bottom: -0.5rem;
+}
+
+.dashboard-topbar-brand {
+    font-family: var(--fuente-titulo, inherit);
+    font-weight: 700;
+    color: var(--color-primario, #4f46e5);
+}
+
+.dashboard-topbar-logout {
+    background: none;
+    border: 1px solid var(--color-borde, #e2e8f0);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.dashboard-topbar-logout:hover {
+    border-color: var(--color-error, #ef4444);
+    color: var(--color-error, #ef4444);
+}
+
 .admin-card-etiqueta {
     margin: 0 0 0.5rem 0;
     color: var(--color-primario, #4f46e5);
