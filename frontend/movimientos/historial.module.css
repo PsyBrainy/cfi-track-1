@@ -27,6 +27,8 @@
 }
 
 .historial-titulo {
+    display: flex;
+    align-items: center;
     margin: 0 0 1rem 0;
     font-size: 1.5rem;
     color: #212529;
