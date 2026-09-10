@@ -4,9 +4,7 @@ import com.alkywall.backend.dtos.ReporteGastosDTO;
 import com.alkywall.backend.dtos.TransaccionResumenDTO;
 import com.alkywall.backend.exceptions.ResourceNotFoundException;
 import com.alkywall.backend.exceptions.SaldoInsuficienteException;
-import com.alkywall.backend.models.Cuenta;
-import com.alkywall.backend.models.TipoTransaccion;
-import com.alkywall.backend.models.Transaccion;
+import com.alkywall.backend.models.*;
 import com.alkywall.backend.repositories.CuentaRepository;
 import com.alkywall.backend.repositories.TransaccionRepository;
 import jakarta.transaction.Transactional;
@@ -31,7 +29,6 @@ public class TransaccionServiceImpl implements ITransaccionService {
     public void realizarDeposito(String userEmail, BigDecimal monto) {
         Cuenta cuenta = cuentaRepository.findByUsuarioEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada"));
-
         cuenta.setSaldo(cuenta.getSaldo().add(monto));
         cuentaRepository.save(cuenta);
 
@@ -76,6 +73,10 @@ public class TransaccionServiceImpl implements ITransaccionService {
 
         if(cuentaOrigen.getSaldo().compareTo(monto) < 0) {
             throw new SaldoInsuficienteException("Saldo insuficiente para realizar la transferencia");
+        }
+
+        if(cuentaDestino.getEstado() != EstadoCuenta.ACTIVA || cuentaDestino.getUsuario().getEstado() != EstadoUsuario.ACTIVO) {
+            throw new RuntimeException("El usuario se encuentra inhabilitado para recibir transferencias.");
         }
 
         cuentaOrigen.setSaldo(
