@@ -135,11 +135,6 @@ form.addEventListener('submit', async function (evento) {
                 monto: Number(monto)
             })
         });
-
-<<<<<<< Updated upstream
-        if (!respuesta.ok) {
-            const textoError = await extraerMensajeError(respuesta);
-=======
         if (respuesta.status === 404) {
             if (alias) {
                 mensaje.textContent = "No se encontró el ALIAS";
@@ -150,7 +145,6 @@ form.addEventListener('submit', async function (evento) {
             return;
         } else if (!respuesta.ok) {
             const textoError = extraerMensajeError(respuesta);
->>>>>>> Stashed changes
             mensaje.textContent = textoError;
             mensaje.className = 'transferencia-mensaje transferencia-error-general';
             return;
