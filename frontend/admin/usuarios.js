@@ -176,7 +176,7 @@ async function cargarUsuarios() {
 }
 
 async function crearUsuario(datos) {
-    const respuesta = await fetch(`${API_BASE_URL}/usuarios`, {
+    const respuesta = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: headersAutenticados(),
         body: JSON.stringify(datos)
@@ -185,6 +185,8 @@ async function crearUsuario(datos) {
     if (!respuesta.ok) {
         throw new Error(await extraerMensajeError(respuesta));
     }
+
+    mostrarToast("Nuevo usuario creado con éxito", 'exito');
 
     return respuesta.json();
 }
