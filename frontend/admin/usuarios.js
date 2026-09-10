@@ -204,8 +204,8 @@ async function actualizarUsuario(id, datos) {
 }
 
 async function eliminarUsuario(id) {
-    const confirmado = window.confirm('¿Seguro que querés dar de baja a este usuario?');
-    if (!confirmado) return;
+    const confirmar = await mostrarAlerta("¿Seguro que desea dar de baja a este usuario?");
+    if (!confirmar) return;
 
     try {
         const respuesta = await fetch(`${API_BASE_URL}/usuarios/${id}`, {
@@ -215,15 +215,17 @@ async function eliminarUsuario(id) {
 
         if (!respuesta.ok && respuesta.status !== 204) {
             const textoError = await extraerMensajeError(respuesta);
+            mostrarToast(textoError, 'error');
             mensajeGlobal.textContent = textoError;
             mensajeGlobal.className = 'usuarios-mensaje error';
             return;
         }
-
+        mostrarToast('Usuario dado de baja correctamente.', 'exito')
         mensajeGlobal.textContent = 'Usuario dado de baja correctamente.';
         mensajeGlobal.className = 'usuarios-mensaje exito';
         cargarUsuarios();
     } catch (error) {
+        mostrarToast('Error al eliminar usuario:', 'error');
         console.error('Error al eliminar usuario:', error);
         mensajeGlobal.textContent = 'Error de conexión. Intentá nuevamente.';
         mensajeGlobal.className = 'usuarios-mensaje error';
@@ -245,6 +247,7 @@ form.addEventListener('submit', async function (evento) {
                 telefono: inputTelefono.value.trim()
             };
             await actualizarUsuario(idEdicion, datosUpdate);
+            mostrarToast('Usuario actualizado con éxito.', 'exito');
             mensajeGlobal.textContent = 'Usuario actualizado con éxito.';
         } else {
             const datosCreacion = {
@@ -271,3 +274,40 @@ form.addEventListener('submit', async function (evento) {
 btnCancelarEdicion.addEventListener('click', resetearFormulario);
 
 document.addEventListener('DOMContentLoaded', cargarUsuarios);
+
+const modal = document.getElementById('miModal');
+const modalTexto = document.getElementById('modalTexto');
+const btnOk = document.getElementById('btnOk');
+const closeBtn = document.getElementById('closeBtn')
+const btnCancelar = document.getElementById('btnCancelar');
+const btnOpen = document.getElementById('btnOpen');
+
+// Función para mostrar la alerta
+function mostrarAlerta(mensaje) {
+    modalTexto.textContent = mensaje;
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+
+    return new Promise((resolve) => {
+        modal._resolver = resolve;
+    });
+}
+
+modal.addEventListener('click', (e) => {
+    if (!modal._resolver) return;
+
+    const confirmar = e.target === btnOk;
+    const cerrar = e.target === modal || e.target === btnCancelar || e.target === closeBtn;
+
+    if (confirmar || cerrar) {
+        const resolver = modal._resolver;
+        modal._resolver = null;
+        cerrarAlerta();
+        resolver(confirmar);
+    }
+});
+
+function cerrarAlerta() {
+    modal.classList.add('hidden');
+    setTimeout(() => { modal.style.display = 'none'; }, 300);
+}

@@ -68,7 +68,8 @@ form.addEventListener('submit', async function(event) {
 
             if (!response.ok) {
                 const data = await response.json().catch(() => ({}));
-                if(data.error === 'Bad credentials') {
+                if(data.error === 'Bad credentials' || data.error === 'User is disabled') {
+                    //Asi es como deberia venir del backend para evitar dar datos extras a atacantes
                     serverError.textContent = 'Email o contraseña incorrectos.';
                     serverError.style.display = 'block';
                     passInput.value = '';
