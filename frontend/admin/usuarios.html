@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="usuarios.module.css">
+    <link rel="stylesheet" href="../shared/toast.css">
 </head>
 <body>
 <main class="usuarios-container">
@@ -65,8 +66,20 @@
             </table>
         </div>
     </section>
+
+        <div id="miModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <p id="modalTexto"></p>
+                <div class="buttons">
+                    <button id="btnOk" class="btn btn-primario">Aceptar</button>
+                    <button id="btnCancelar" class="btn btn-secundario">Cancelar</button>
+                </div>
+            </div>
+        </div>
 </main>
 <script src="../shared/utils.js"></script>
+<script src="../shared/toast.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
     lucide.createIcons();

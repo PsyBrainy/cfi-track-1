@@ -4,9 +4,8 @@ import com.alkywall.backend.dtos.UsuarioRequestDTO;
 import com.alkywall.backend.dtos.UsuarioResponseDTO;
 import com.alkywall.backend.dtos.UsuarioUpdateDTO;
 import com.alkywall.backend.exceptions.ResourceNotFoundException;
-import com.alkywall.backend.models.EstadoUsuario;
-import com.alkywall.backend.models.Role;
-import com.alkywall.backend.models.Usuario;
+import com.alkywall.backend.models.*;
+import com.alkywall.backend.repositories.CuentaRepository;
 import com.alkywall.backend.repositories.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,10 +19,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CuentaRepository cuentaRepository;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, CuentaRepository cuentaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.cuentaRepository = cuentaRepository;
     }
 
     @Override
@@ -85,7 +86,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
 
+        Cuenta cuenta = cuentaRepository.findByUsuario_IdUsuario(id)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada para el usuario con ID: " + id));
+
+        cuenta.setEstado(EstadoCuenta.CERRADA);
         usuario.setEstado(EstadoUsuario.INACTIVO);
+        cuentaRepository.save(cuenta);
         usuarioRepository.save(usuario);
     }
 
