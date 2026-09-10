@@ -32,7 +32,7 @@ form.addEventListener('submit', async function(event) {
         }
 
     // 2. Validar Contraseña
-    if (passInput.value.length < 6) {
+    if (passInput.value.length < 8) {
         passError.style.display = 'block';
         isValid = false;
     } else {
@@ -61,16 +61,21 @@ form.addEventListener('submit', async function(event) {
             if(response.status === 401 || response.status === 403) {
                 const data = await response.json().catch(() => ({}));
                 console.log(data)
-                serverError.textContent = data.message || 'Email o contrasena incorrectos.)';
+                serverError.textContent = data.message || 'Email o contraseña incorrectos.)';
                 serverError.style.display = 'block';
                 return
             }
 
             if (!response.ok) {
                 const data = await response.json().catch(() => ({}));
-                console.log(data);
-                serverError.textContent = data.message || 'Ocurrio un error al iniciar sesion.'
-                serverError.style.display = 'block';
+                if(data.error === 'Bad credentials') {
+                    serverError.textContent = 'Email o contraseña incorrectos.';
+                    serverError.style.display = 'block';
+                    passInput.value = '';
+                } else {
+                    serverError.textContent = data.error || 'Ocurrio un error al iniciar sesion.'
+                    serverError.style.display = 'block';
+                }
                 return;
             }
 
