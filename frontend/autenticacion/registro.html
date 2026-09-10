@@ -12,11 +12,13 @@
     <div class="auth-wrapper">
         <div class="container">
             <div class="logo">
-                <span class="brand">Alkywall</span>
+                <a href="../index.html">
+                    <span>Alkywall</span>
+                </a>
             </div>
         </div>
         <div class="hero-info m-t-50">
-            <h1>Registrate en Alkywall</h1>
+            <h1>Crea una cuenta en <span>Alkywall</span> </h1>
         </div>
         <form id="registroForm" action="">
             <label for="nombre">Nombre <span class="requerido">*</span></label>
@@ -50,9 +52,15 @@
             <small class="hint">Mínimo 8 caracteres.</small>
             <div id="passwordError" class="error">La contraseña debe tener al menos 8 caracteres.</div>
 
+            <label for="confirm-password">Confirmar contraseña <span class="requerido">*</span></label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="********">
+            <small class="hint">Las contraseñas deben ser iguales.</small>
+            <div id="passwordRepeatError" class="error">Las contraseñas no coinciden.</div>
+
             <p class="nota-requeridos"><span class="requerido">*</span> Campos obligatorios</p>
 
             <button type="submit" class="btn btn-primario" id="btn-registro">Registrarse</button>
+            <a class="btn-register" href="login.html">o Inicia Sesión</a>
 
             <div id="serverError" class="error"></div>
         </form>
