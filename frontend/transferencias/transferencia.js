@@ -136,8 +136,21 @@ form.addEventListener('submit', async function (evento) {
             })
         });
 
+<<<<<<< Updated upstream
         if (!respuesta.ok) {
             const textoError = await extraerMensajeError(respuesta);
+=======
+        if (respuesta.status === 404) {
+            if (alias) {
+                mensaje.textContent = "No se encontró el ALIAS";
+            } else if(cbu) {
+                mensaje.textContent = "No se encontró el CBU";
+            }
+            mensaje.className = 'transferencia-mensaje transferencia-error-general';
+            return;
+        } else if (!respuesta.ok) {
+            const textoError = extraerMensajeError(respuesta);
+>>>>>>> Stashed changes
             mensaje.textContent = textoError;
             mensaje.className = 'transferencia-mensaje transferencia-error-general';
             return;
