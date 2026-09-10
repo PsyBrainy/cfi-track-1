@@ -13,13 +13,13 @@ const btnConfirmar = document.getElementById('btn-confirmar-deposito');
 function validarMonto() {
     const valorIngresado = montoInput.value;
     const monto = Number(valorIngresado);
-    const esValido = valorIngresado !== '' && monto > 0;
+    const esValido = valorIngresado !== '' && monto >= 1;
 
     if (valorIngresado === '') {
         errorMonto.textContent = '';
         montoInput.classList.remove('input-error');
     } else if (!esValido) {
-        errorMonto.textContent = 'Ingresá un monto mayor a cero.';
+        errorMonto.textContent = 'El monto a depositar debe ser mayor o igual a $1.';
         montoInput.classList.add('input-error');
     } else {
         errorMonto.textContent = '';

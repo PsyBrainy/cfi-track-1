@@ -1,12 +1,14 @@
 const form = document.getElementById('registroForm');
 const emailInput = document.getElementById('email');
 const passInput = document.getElementById('password');
+const passRepeatInput = document.getElementById('confirm-password');
 const nombreInput = document.getElementById('nombre');
 const apellidoInput = document.getElementById('apellido');
 const documentoInput = document.getElementById('documento');
 const telefonoInput = document.getElementById('telefono');
 const emailError = document.getElementById('emailError');
 const passError = document.getElementById('passwordError');
+const passRepeatError = document.getElementById('passwordRepeatError');
 const nombreError = document.getElementById('nombreError');
 const nombreErrorVacio = document.getElementById('nombreErrorVacio');
 const apellidoError = document.getElementById('apellidoError');
@@ -39,6 +41,11 @@ form.addEventListener('submit', async function(event) {
     // 2. Validar Contraseña
     if (passInput.value.length < 8) {
         passError.style.display = 'block';
+        passRepeatError.style.display = 'none';
+        isValid = false;
+    } else if (passInput.value !== passRepeatInput.value) {
+        passError.style.display = 'none';
+        passRepeatError.style.display = 'block';
         isValid = false;
     } else {
         passError.style.display = 'none';

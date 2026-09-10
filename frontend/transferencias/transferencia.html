@@ -20,19 +20,30 @@
         <p class="transferencia-subtitulo">Transferí saldo a otro usuario de Alkywall.</p>
 
         <form id="form-transferencia" novalidate>
-            <div class="transferencia-campo">
-                <label for="alias">Alias</label>
-                <input type="text" id="alias" name="alias" placeholder="mi.alias.mp">
-                <span class="transferencia-error" id="error-alias"></span>
+
+            <!-- Tabs -->
+            <div class="transferencia-tabs">
+                <button type="button" class="tab-btn active" data-tab="alias">Alias</button>
+                <button type="button" class="tab-btn" data-tab="cbu">CBU</button>
             </div>
 
-            <p class="transferencia-separador">o</p>
-
-            <div class="transferencia-campo">
-                <label for="cbu">CBU</label>
-                <input type="text" id="cbu" name="cbu" placeholder="0000003100000000000001">
-                <span class="transferencia-error" id="error-cbu"></span>
+            <!-- Contenido de las tabs -->
+            <div class="tab-content active" id="tab-alias">
+                <div class="transferencia-campo">
+                    <label for="alias">Alias</label>
+                    <input type="text" id="alias" name="alias" placeholder="mi.alias.mp">
+                    <span class="transferencia-error" id="error-alias"></span>
+                </div>
             </div>
+
+            <div class="tab-content" id="tab-cbu">
+                <div class="transferencia-campo">
+                    <label for="cbu">CBU</label>
+                    <input type="text" id="cbu" name="cbu" placeholder="0000003100000000000001">
+                    <span class="transferencia-error" id="error-cbu"></span>
+                </div>
+            </div>
+
 
             <div class="transferencia-campo">
                 <label for="monto">Monto a transferir</label>
@@ -40,9 +51,9 @@
                 <span class="transferencia-error" id="error-monto"></span>
             </div>
 
-            <div class="transferencia-mensaje" id="transferencia-mensaje"></div>
-
             <button type="submit" class="transferencia-boton" id="btn-transferir">Transferir</button>
+
+            <div class="transferencia-mensaje" id="transferencia-mensaje"></div>
         </form>
     </section>
 </main>

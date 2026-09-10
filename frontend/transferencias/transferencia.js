@@ -30,14 +30,56 @@ function limpiarErrores() {
     mensaje.className = 'transferencia-mensaje';
 }
 
+let tabActiva = 'alias';
+
+const botonesTab = document.querySelectorAll('.tab-btn');
+const contenidosTab = document.querySelectorAll('.tab-content');
+
+botonesTab.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Cambiar tab activa
+        tabActiva = btn.dataset.tab;
+         // Reset inputs y errores
+        limpiarErrores();
+        aliasInput.value = '';
+        cbuInput.value = '';
+
+        botonesTab.forEach(b => b.classList.remove('active'));
+        contenidosTab.forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById('tab-' + tabActiva).classList.add('active');
+    });
+});
+
 function validarFormulario(alias, cbu, monto) {
     let esValido = true;
 
-    if (!alias && !cbu) {
-        errorAlias.textContent = 'Ingresá un alias o un CBU.';
+    if (tabActiva === 'alias' && !alias) {
+        document.getElementById('error-alias').textContent = 'Ingresá un alias.';
+        errorAlias.textContent = 'Ingresá un alias.';
         aliasInput.classList.add('input-error');
         cbuInput.classList.add('input-error');
         esValido = false;
+    }
+
+    if (tabActiva === 'cbu') {
+        const regexCbu = /^\d{22}$/;
+        const valorCbu = cbuInput.value.trim();
+
+        if (!valorCbu) {
+            document.getElementById('error-cbu').textContent = 'Ingresá un CBU.';
+            cbuInput.classList.add('input-error');
+            esValido = false;
+        } else if (!regexCbu.test(valorCbu)) {
+            const mensaje = /^\d+$/.test(valorCbu)
+                ? 'El CBU debe tener exactamente 22 dígitos.'
+                : 'El CBU solo puede contener números.';
+
+            document.getElementById('error-cbu').textContent = mensaje;
+            cbuInput.classList.add('input-error');
+            esValido = false;
+        }
     }
 
     if (!monto || Number(monto) < 1) {
@@ -114,23 +156,5 @@ form.addEventListener('submit', async function (evento) {
     } finally {
         btnTransferir.disabled = false;
         btnTransferir.textContent = 'Transferir';
-    }
-});
-
-aliasInput.addEventListener('input', function () {
-    if (aliasInput.value.trim().length > 0) {
-        cbuInput.value = '';
-        cbuInput.disabled = true;
-    } else {
-        cbuInput.disabled = false;
-    }
-});
-
-cbuInput.addEventListener('input', function () {
-    if (cbuInput.value.trim().length > 0) {
-        aliasInput.value = '';
-        aliasInput.disabled = true;
-    } else {
-        aliasInput.disabled = false;
     }
 });

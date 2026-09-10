@@ -89,14 +89,43 @@
     height: 18px;
 }
 
+.dashboard-accion {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    justify-self: center;
+}
+
 .dashboard-accion:hover {
-    background-color: var(--color-primario-hover, #4338ca);
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
 }
 
 .dashboard-accion:active {
     transform: translateY(0);
+}
+
+/* Subrayado azul animado */
+.dashboard-accion::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: blue;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.dashboard-accion:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 .dashboard-accion-admin {
@@ -108,8 +137,13 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 480px;
+    width: 100%;
+    padding: 50px 100px;
     margin-bottom: -0.5rem;
+    font-family: var(--fuente-titulo);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primario);
 }
 
 .dashboard-topbar-brand {
@@ -211,5 +245,10 @@
 
     .balance-card h2 {
         font-size: 2.2rem;
+    }
+
+    .dashboard-topbar {
+        padding: 20px 40px;
+        margin-bottom: 0;
     }
 }

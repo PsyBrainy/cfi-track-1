@@ -23,7 +23,7 @@ main{
 }
 
 form {
-    width: 320px;
+    width: 50%;
     max-width: 90vw;
     display: flex;
     flex-direction: column;
@@ -93,11 +93,6 @@ input:focus {
     margin: 0;
 }
 
-.hero-info h1 {
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
-    text-align: center;
-}
-
 @keyframes auth-aparecer {
     from {
         opacity: 0;
@@ -116,5 +111,11 @@ input:focus {
 
     form {
         padding: 1.5rem;
+        width: 90%;
+    }
+
+    .hero-info h1 {
+        font-size: clamp(1.6rem, 5vw, 2.2rem);
+        text-align: center;
     }
 }
