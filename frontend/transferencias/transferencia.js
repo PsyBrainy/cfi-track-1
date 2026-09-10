@@ -94,7 +94,7 @@ function validarFormulario(alias, cbu, monto) {
 async function extraerMensajeError(respuesta) {
     try {
         const cuerpo = await respuesta.json();
-        return cuerpo.error || cuerpo.message || 'No se pudo completar la transferencia.';
+        return cuerpo.message || 'No se pudo completar la transferencia.';
     } catch {
         return 'No se pudo completar la transferencia.';
     }
@@ -138,7 +138,6 @@ form.addEventListener('submit', async function (evento) {
 
         if (!respuesta.ok) {
             const textoError = await extraerMensajeError(respuesta);
-            console.log(textoError)
             mensaje.textContent = textoError;
             mensaje.className = 'transferencia-mensaje transferencia-error-general';
             return;
