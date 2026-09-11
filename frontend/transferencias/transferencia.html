@@ -4,22 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Enviar Dinero - Alkywall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="transferencia.module.css">
+    <link rel="stylesheet" href="../shared/toast.css">
 </head>
 <body>
 <main class="transferencia-container">
     <a href="../dashboard.html" class="transferencia-volver">&larr; Volver al dashboard</a>
 
     <section class="transferencia-card">
-        <h1 class="transferencia-titulo">Enviar dinero</h1>
+        <h1 class="transferencia-titulo"><i data-lucide="send"></i> Enviar dinero</h1>
         <p class="transferencia-subtitulo">Transferí saldo a otro usuario de Alkywall.</p>
 
         <form id="form-transferencia" novalidate>
-            <div class="transferencia-campo">
-                <label for="destinatario">Destinatario (ID o Email)</label>
-                <input type="text" id="destinatario" name="destinatario" placeholder="usuario@ejemplo.com">
-                <span class="transferencia-error" id="error-destinatario"></span>
+
+            <!-- Tabs -->
+            <div class="transferencia-tabs">
+                <button type="button" class="tab-btn active" data-tab="alias">Alias</button>
+                <button type="button" class="tab-btn" data-tab="cbu">CBU</button>
             </div>
+
+            <!-- Contenido de las tabs -->
+            <div class="tab-content active" id="tab-alias">
+                <div class="transferencia-campo">
+                    <label for="alias">Alias</label>
+                    <input type="text" id="alias" name="alias" placeholder="mi.alias.mp">
+                    <span class="transferencia-error" id="error-alias"></span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-cbu">
+                <div class="transferencia-campo">
+                    <label for="cbu">CBU</label>
+                    <input type="text" id="cbu" name="cbu" placeholder="0000003100000000000001">
+                    <span class="transferencia-error" id="error-cbu"></span>
+                </div>
+            </div>
+
 
             <div class="transferencia-campo">
                 <label for="monto">Monto a transferir</label>
@@ -27,12 +51,17 @@
                 <span class="transferencia-error" id="error-monto"></span>
             </div>
 
-            <div class="transferencia-mensaje" id="transferencia-mensaje"></div>
-
             <button type="submit" class="transferencia-boton" id="btn-transferir">Transferir</button>
+
+            <div class="transferencia-mensaje" id="transferencia-mensaje"></div>
         </form>
     </section>
 </main>
+<script src="../shared/toast.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
 <script src="transferencia.js"></script>
 </body>
 </html>

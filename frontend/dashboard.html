@@ -4,27 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Alkywall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="reportes/reporte.module.css">
+    <link rel="stylesheet" href="deposito/deposito.module.css">
+    <link rel="stylesheet" href="shared/toast.css">
 </head>
 <body>
-<main class="dashboard-container">
-    <section class="balance-card">
-        <p>Tu saldo actual</p>
-        <!-- Contenedor especifico para el saldo -->
-        <h2 id="saldo-disponible">Cargando...</h2>
-        <a href="transferencias/transferencia.html" class="dashboard-accion">Enviar dinero</a>
-        <a href="movimientos/historial.html" class="dashboard-accion">Ver movimientos</a>
-    </section>
 
-    <!-- Componente aislado: Reporte de Gastos -->
-    <section class="reporte-container">
-        <h2 class="reporte-titulo">Reporte de gastos</h2>
-        <p class="reporte-mensaje" id="reporte-mensaje"></p>
-        <div class="reporte-barras" id="reporte-barras"></div>
-    </section>
+<header class="dashboard-topbar">
+    <div class="nav-item">
+        <a href="index.html">
+            <span>Alkywall</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <button type="button" id="btn-logout-dashboard" class="btn btn-secundario">Cerrar Sesión</button>
+    </div>
+</header>
+
+<main class="dashboard-container">
+
+    <!-- ================= VISTA CLIENTE ================= -->
+    <div id="vista-cliente" class="dashboard-oculto">
+        <section class="balance-card">
+            <p>Tu saldo actual</p>
+            <h2 id="saldo-disponible">Cargando...</h2>
+
+            <div class="moneda-switch">
+                <button id="btn-ars" class="moneda-btn activo">ARS</button>
+                <button id="btn-usd" class="moneda-btn">USD</button>
+            </div>
+            <p id="cotizacion-dolar" class="cotizacion-dolar">Cargando...</p>
+
+            <p class="balance-alias" id="alias-cuenta">Alias</p>
+            <div class="dashboard-acciones">
+                <a href="transferencias/transferencia.html" class="dashboard-accion"><i data-lucide="arrow-right-left"></i> Enviar dinero</a>
+                <a href="movimientos/historial.html" class="dashboard-accion"><i data-lucide="list"></i> Ver movimientos</a>
+            </div>
+        </section>
+
+        <section class="deposito-container">
+            <h2 class="deposito-titulo"><i data-lucide="wallet"></i> Depositar dinero</h2>
+            <p class="deposito-subtitulo">Cargá saldo a tu cuenta Alkywall.</p>
+
+            <div class="deposito-campo">
+                <label for="deposito-monto">Monto a depositar</label>
+                <input type="number" id="deposito-monto" name="monto" placeholder="0.00" min="1" step="0.01">
+                <span class="deposito-error" id="deposito-error"></span>
+            </div>
+
+            <div class="deposito-notificacion" id="deposito-notificacion"></div>
+
+            <button type="button" class="deposito-boton" id="btn-confirmar-deposito" disabled>Confirmar Depósito</button>
+        </section>
+
+        <section class="reporte-container">
+            <h2 class="reporte-titulo"><i data-lucide="pie-chart"></i> Reporte de gastos</h2>
+            <p class="reporte-mensaje" id="reporte-mensaje"></p>
+            <div class="reporte-barras" id="reporte-barras"></div>
+        </section>
+    </div>
+
+    <!-- ================= VISTA ADMIN ================= -->
+    <div id="vista-admin" class="dashboard-oculto">
+        <section class="admin-card">
+            <p class="admin-card-etiqueta">Panel de administración</p>
+            <h2 class="admin-card-titulo">Gestioná los usuarios de Alkywall</h2>
+            <p class="admin-card-subtitulo">Como administrador no tenés acceso a saldo, depósitos ni transferencias.</p>
+            <a href="admin/usuarios.html" class="dashboard-accion dashboard-accion-admin"><i data-lucide="users"></i> Administrar usuarios</a>
+        </section>
+    </div>
+
 </main>
+<script src="shared/utils.js"></script>
+<script src="shared/toast.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 <script src="dashboard.js"></script>
 <script src="reportes/reporte.js"></script>
+<script src="deposito/deposito.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.alkywall.backend.security.services;
 
+import com.alkywall.backend.models.EstadoUsuario;
 import com.alkywall.backend.models.Usuario;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,7 @@ public class CustomUserDetails implements UserDetails {
     private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final boolean enabled;
+    private final EstadoUsuario estado;
 
     public CustomUserDetails(Usuario user) {
         this.idUsuario = user.getIdUsuario();
@@ -28,8 +29,7 @@ public class CustomUserDetails implements UserDetails {
                 )
         );
 
-        this.enabled = !user.getEstado().name().equals("INACTIVO");
-
+        this.estado = user.getEstado();
     }
 
     public Long getIdUsuario() {
@@ -50,4 +50,7 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername() {
         return email;
     }
+
+    @Override
+    public boolean isEnabled() { return estado== EstadoUsuario.ACTIVO; }
 }

@@ -1,8 +1,12 @@
 package com.alkywall.backend.initializer;
 
+import com.alkywall.backend.models.Cuenta;
+import com.alkywall.backend.models.Moneda;
 import com.alkywall.backend.models.Role;
 import com.alkywall.backend.models.Usuario;
+import com.alkywall.backend.repositories.CuentaRepository;
 import com.alkywall.backend.repositories.UsuarioRepository;
+import com.alkywall.backend.services.CuentaGeneratorService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +36,8 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner init(UsuarioRepository usuarioRepository,
+                           CuentaRepository cuentaRepository,
+                           CuentaGeneratorService cuentaGeneratorService,
                            PasswordEncoder passwordEncoder) {
         return args -> {
 
@@ -49,7 +55,13 @@ public class DataInitializer {
 
                 admin.setRol(Role.ADMIN);
 
-                usuarioRepository.save(admin);
+                Usuario adminGuardado = usuarioRepository.save(admin);
+
+                String cbu = cuentaGeneratorService.generarCbuUnico();
+                String alias = cuentaGeneratorService.generarAliasUnico();
+
+                Cuenta cuentaAdmin = new Cuenta(adminGuardado, cbu, alias, Moneda.ARS);
+                cuentaRepository.save(cuentaAdmin);
             }
         };
     }

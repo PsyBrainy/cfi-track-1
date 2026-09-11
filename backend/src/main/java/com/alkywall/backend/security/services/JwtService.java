@@ -48,12 +48,15 @@ public class JwtService {
                 .compact();
     }
 
+    //incluye el rol como claim para que el frontend pueda leerlo sin llamadas extra
     public String generateToken(Usuario user) {
-        return generateToken(new HashMap<>(), user);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", user.getRol().name());
+        return generateToken(extraClaims, user);
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, claims -> claims.getSubject());
+        return extractClaim(token, Claims::getSubject);
     }
 
     public List<String> extractRoles(String token) {
@@ -71,7 +74,7 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-        return extractClaim(token, claims -> claims.getExpiration()).before(new Date());
+        return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
     private Claims getAllClaims(String token) {
@@ -82,5 +85,4 @@ public class JwtService {
             .parseSignedClaims(token)
             .getPayload();
     }
-
 }

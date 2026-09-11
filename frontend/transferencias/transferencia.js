@@ -1,42 +1,89 @@
 // Alkywall - Formulario de Transferencias/Pagos
 //
-// NOTA: el endpoint POST /api/transacciones/transferencia todavia no existe
-// en el backend (ticket #30 depende de un endpoint "nuevo" que hay que crear).
-// Se asume que recibe un TransferenciaRequestDTO con forma
-// { destinatario: string (id o email), monto: number } y que devuelve 400
-// cuando la operacion no puede completarse (ej. saldo insuficiente).
-// Ajustar la URL y los nombres de campos cuando el backend este listo.
+// Endpoint real: POST /api/transacciones/transferencia
+// Body: { "alias": "...", "cbu": "...", "monto": 123 } (mandar solo uno de
+// alias/cbu, el otro vacio). El backend identifica la cuenta de origen a
+// partir del email del JWT.
+// Errores: 404 si no existe la cuenta destino, 422 si el saldo es
+// insuficiente o los datos son invalidos (no 400).
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
 const form = document.getElementById('form-transferencia');
-const destinatarioInput = document.getElementById('destinatario');
+const aliasInput = document.getElementById('alias');
+const cbuInput = document.getElementById('cbu');
 const montoInput = document.getElementById('monto');
-const errorDestinatario = document.getElementById('error-destinatario');
+const errorAlias = document.getElementById('error-alias');
+const errorCbu = document.getElementById('error-cbu');
 const errorMonto = document.getElementById('error-monto');
 const mensaje = document.getElementById('transferencia-mensaje');
 const btnTransferir = document.getElementById('btn-transferir');
 
 function limpiarErrores() {
-    errorDestinatario.textContent = '';
+    errorAlias.textContent = '';
+    errorCbu.textContent = '';
     errorMonto.textContent = '';
-    destinatarioInput.classList.remove('input-error');
+    aliasInput.classList.remove('input-error');
+    cbuInput.classList.remove('input-error');
     montoInput.classList.remove('input-error');
     mensaje.textContent = '';
     mensaje.className = 'transferencia-mensaje';
 }
 
-function validarFormulario(destinatario, monto) {
+let tabActiva = 'alias';
+
+const botonesTab = document.querySelectorAll('.tab-btn');
+const contenidosTab = document.querySelectorAll('.tab-content');
+
+botonesTab.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Cambiar tab activa
+        tabActiva = btn.dataset.tab;
+         // Reset inputs y errores
+        limpiarErrores();
+        aliasInput.value = '';
+        cbuInput.value = '';
+
+        botonesTab.forEach(b => b.classList.remove('active'));
+        contenidosTab.forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById('tab-' + tabActiva).classList.add('active');
+    });
+});
+
+function validarFormulario(alias, cbu, monto) {
     let esValido = true;
 
-    if (!destinatario) {
-        errorDestinatario.textContent = 'Ingresá el ID o email del destinatario.';
-        destinatarioInput.classList.add('input-error');
+    if (tabActiva === 'alias' && !alias) {
+        document.getElementById('error-alias').textContent = 'Ingresá un alias.';
+        errorAlias.textContent = 'Ingresá un alias.';
+        aliasInput.classList.add('input-error');
+        cbuInput.classList.add('input-error');
         esValido = false;
     }
 
-    if (!monto || Number(monto) <= 0) {
-        errorMonto.textContent = 'Ingresá un monto mayor a cero.';
+    if (tabActiva === 'cbu') {
+        const regexCbu = /^\d{22}$/;
+        const valorCbu = cbuInput.value.trim();
+
+        if (!valorCbu) {
+            document.getElementById('error-cbu').textContent = 'Ingresá un CBU.';
+            cbuInput.classList.add('input-error');
+            esValido = false;
+        } else if (!regexCbu.test(valorCbu)) {
+            const mensaje = /^\d+$/.test(valorCbu)
+                ? 'El CBU debe tener exactamente 22 dígitos.'
+                : 'El CBU solo puede contener números.';
+
+            document.getElementById('error-cbu').textContent = mensaje;
+            cbuInput.classList.add('input-error');
+            esValido = false;
+        }
+    }
+
+    if (!monto || Number(monto) < 1) {
+        errorMonto.textContent = 'El monto mínimo a transferir es $1.';
         montoInput.classList.add('input-error');
         esValido = false;
     }
@@ -47,7 +94,7 @@ function validarFormulario(destinatario, monto) {
 async function extraerMensajeError(respuesta) {
     try {
         const cuerpo = await respuesta.json();
-        return cuerpo.message || cuerpo.mensaje || cuerpo.detail || 'No se pudo completar la transferencia.';
+        return cuerpo.message || 'No se pudo completar la transferencia.';
     } catch {
         return 'No se pudo completar la transferencia.';
     }
@@ -57,10 +104,11 @@ form.addEventListener('submit', async function (evento) {
     evento.preventDefault();
     limpiarErrores();
 
-    const destinatario = destinatarioInput.value.trim();
+    const alias = aliasInput.value.trim();
+    const cbu = cbuInput.value.trim();
     const monto = montoInput.value;
 
-    if (!validarFormulario(destinatario, monto)) {
+    if (!validarFormulario(alias, cbu, monto)) {
         return;
     }
 
@@ -82,17 +130,11 @@ form.addEventListener('submit', async function (evento) {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                destinatario: destinatario,
+                alias: alias || null,
+                cbu: cbu || null,
                 monto: Number(monto)
             })
         });
-
-        if (respuesta.status === 400) {
-            const textoError = await extraerMensajeError(respuesta);
-            mensaje.textContent = textoError;
-            mensaje.className = 'transferencia-mensaje transferencia-error-general';
-            return;
-        }
 
         if (!respuesta.ok) {
             const textoError = await extraerMensajeError(respuesta);
@@ -103,7 +145,9 @@ form.addEventListener('submit', async function (evento) {
 
         mensaje.textContent = '¡Transferencia realizada con éxito!';
         mensaje.className = 'transferencia-mensaje transferencia-exito';
-        alert('Transferencia enviada correctamente.');
+        if (typeof mostrarToast === 'function') {
+            mostrarToast('Transferencia enviada correctamente.', 'exito');
+        }
         form.reset();
     } catch (error) {
         console.error('Error en la transferencia:', error);

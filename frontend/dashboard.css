@@ -1,26 +1,50 @@
 /* Clases aisladas para evitar colisiones con el formulario de registro */
 .dashboard-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f7f6;
-    font-family: Arial, sans-serif;
+    gap: 1.5rem;
+    min-height: 100vh;
+    background-color: var(--color-fondo, #f4f7f6);
+    font-family: var(--fuente-principal, Arial, sans-serif);
     margin: 0;
+    padding: 2.5rem 1rem;
+    box-sizing: border-box;
 }
 
-.balance-card {
-    background-color: #ffffff;
-    padding: 40px;
+.dashboard-oculto {
+    display: none !important;
+}
+
+#vista-cliente,
+#vista-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.balance-card,
+.admin-card {
+    background-color: var(--color-tarjeta, #ffffff);
+    padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     text-align: center;
-    min-width: 320px;
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+}
+
+/* Fix animation layout shift */
+#vista-admin:not(.dashboard-oculto) .admin-card {
+    animation: dashboard-aparecer 0.4s ease both;
 }
 
 .balance-card p {
     margin: 0;
-    color: #6c757d;
+    color: var(--color-texto-suave, #6c757d);
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -28,22 +52,203 @@
 
 .balance-card h2 {
     margin: 15px 0 0 0;
-    color: #212529;
+    color: var(--color-primario, #4f46e5);
     font-size: 2.8rem;
+    font-family: var(--fuente-titulo, inherit);
+}
+
+.balance-alias {
+    margin: 0.5rem 0 0 0 !important;
+    color: var(--color-texto-suave, #6c757d) !important;
+    font-size: 0.85rem !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    min-height: 1.1rem;
+}
+
+.dashboard-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.dashboard-accion,
+.deposito-titulo,
+.reporte-titulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.dashboard-accion [data-lucide],
+.deposito-titulo [data-lucide],
+.reporte-titulo [data-lucide] {
+    width: 18px;
+    height: 18px;
 }
 
 .dashboard-accion {
+    position: relative;
     display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4f46e5;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    justify-self: center;
 }
 
 .dashboard-accion:hover {
-    background-color: #4338ca;
+    transform: translateY(-2px);
+}
+
+.dashboard-accion:active {
+    transform: translateY(0);
+}
+
+/* Subrayado azul animado */
+.dashboard-accion::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: blue;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.dashboard-accion:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.dashboard-accion-admin {
+    margin-top: 1.5rem;
+}
+
+.dashboard-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    width: 100%;
+    padding: 50px 100px;
+    margin-bottom: -0.5rem;
+    font-family: var(--fuente-titulo);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primario);
+}
+
+.dashboard-topbar-brand {
+    font-family: var(--fuente-titulo, inherit);
+    font-weight: 700;
+    color: var(--color-primario, #4f46e5);
+}
+
+.admin-card-etiqueta {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-primario, #4f46e5);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-card-titulo {
+    margin: 0 0 0.75rem 0;
+    color: var(--color-texto, #212529);
+    font-family: var(--fuente-titulo, inherit);
+    font-size: 1.6rem;
+}
+
+.admin-card-subtitulo {
+    margin: 0;
+    color: var(--color-texto-suave, #6c757d);
+    font-size: 0.9rem;
+}
+
+.moneda-switch {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0 5px;
+}
+
+.moneda-btn {
+    padding: 6px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.moneda-btn:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.moneda-btn:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.moneda-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.moneda-btn.activo {
+    background-color: var(--color-primario, #ffffff);
+    color: white;
+    border-color: #333;
+}
+
+.cotizacion-dolar {
+    margin: 5px 0 15px;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+@keyframes dashboard-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#vista-cliente > section:nth-of-type(2) {
+    animation: dashboard-aparecer 0.4s ease 0.08s both;
+}
+
+#vista-cliente > section:nth-of-type(3) {
+    animation: dashboard-aparecer 0.4s ease 0.16s both;
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .balance-card,
+    .admin-card {
+        padding: 1.75rem;
+    }
+
+    .balance-card h2 {
+        font-size: 2.2rem;
+    }
+
+    .dashboard-topbar {
+        padding: 20px 40px;
+        margin-bottom: 0;
+    }
 }

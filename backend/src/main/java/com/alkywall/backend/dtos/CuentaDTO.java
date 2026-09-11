@@ -2,6 +2,7 @@ package com.alkywall.backend.dtos;
 
 import com.alkywall.backend.models.Moneda;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class CuentaDTO {
     private BigDecimal saldoDisponible;
@@ -9,6 +10,9 @@ public class CuentaDTO {
     private String alias;
     private String cbu;
     private Long id_usuario;
+    private Long cuentaId;
+    private BigDecimal cotizacionDolar;
+    private LocalDateTime fechaCotizacion;
 
     //getters & setters
     public BigDecimal getSaldoDisponible() {
@@ -49,5 +53,29 @@ public class CuentaDTO {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Long getCuentaId() {
+        return cuentaId;
+    }
+
+    public void setCuentaId(Long cuentaId) {
+        this.cuentaId = cuentaId;
+    }
+
+    public LocalDateTime getFechaCotizacion() {
+        return fechaCotizacion;
+    }
+
+    public void setFechaCotizacion(LocalDateTime fechaCotizacion) {
+        this.fechaCotizacion = fechaCotizacion;
+    }
+
+    public BigDecimal getCotizacionDolar() {
+        return cotizacionDolar;
+    }
+
+    public void setCotizacionDolar(BigDecimal cotizacionDolar) {
+        this.cotizacionDolar = cotizacionDolar;
     }
 }

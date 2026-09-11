@@ -11,18 +11,25 @@ import java.util.List;
 
 @Repository
 public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
-    //Consulta: historial con WHERE y ORDER BY
-    @Query("SELECT new com.alkywall.backend.dtos.TransaccionResumenDTO(t.idTransaccion, t.monto, cast(t.tipo as string), t.fecha, cast(t.estado as string)) " +
+    //Consulta: historial con WHERE y ORDER BY (incluye depósitos, egresos e ingresos)
+    @Query("SELECT new com.alkywall.backend.dtos.TransaccionResumenDTO(t.idTransaccion, t.monto, cast(t.tipo as string), t.fechaHora, cast(t.estado as string)) " +
             "FROM Transaccion t " +
-            "WHERE t.cuenta.idCuenta = :cuentaId " +
-            "ORDER BY t.fecha DESC")
+            "WHERE " +
+            "(t.cuentaOrigen.idCuenta = :cuentaId AND t.tipo = 'EGRESO') " +
+            "OR " +
+            "(t.cuentaDestino.idCuenta = :cuentaId AND t.tipo = 'INGRESO') " +
+            "OR " +
+            "(t.cuentaDestino.idCuenta = :cuentaId AND t.tipo = 'DEPOSITO') " +
+            "ORDER BY t.fechaHora DESC")
     List<TransaccionResumenDTO> obtenerHistorialPorCuenta(@Param("cuentaId") Long cuentaId);
 
-    // Consulta: Agrupa con JOIN, GROUP BY y SUM
+    // Consulta: Agrupa con WHERE, GROUP BY y SUM (egresos/extracciones por cuenta origen + depósitos por cuenta destino)
     @Query("SELECT new com.alkywall.backend.dtos.ReporteGastosDTO(cast(t.tipo as string), SUM(t.monto)) " +
             "FROM Transaccion t " +
-            "JOIN t.cuenta c " +
-            "WHERE c.idCuenta = :cuentaId " +
+            "WHERE " +
+            "(t.cuentaOrigen.idCuenta = :cuentaId AND t.tipo IN ('EGRESO', 'EXTRACCION')) " +
+            "OR " +
+            "(t.cuentaDestino.idCuenta = :cuentaId AND t.tipo = 'DEPOSITO') " +
             "GROUP BY t.tipo")
     List<ReporteGastosDTO> obtenerTotalAgrupadoPorTipo(@Param("cuentaId") Long cuentaId);
 }

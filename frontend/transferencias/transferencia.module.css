@@ -13,8 +13,45 @@
     gap: 1rem;
     padding: 2rem 1rem;
     background-color: #f4f7f6;
-    font-family: Arial, sans-serif;
+    font-family: var(--fuente-principal, Arial, sans-serif);
     box-sizing: border-box;
+}
+
+.transferencia-tabs {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover {
+    color: #333;
+}
+
+.tab-btn.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    padding-top: 16px;
+}
+
+.tab-content.active {
+    display: block;
 }
 
 .transferencia-volver {
@@ -39,12 +76,14 @@
     width: 100%;
     max-width: 420px;
     box-sizing: border-box;
+    animation: transferencia-aparecer 0.35s ease both;
 }
 
 .transferencia-titulo {
     margin: 0 0 0.25rem 0;
     font-size: 1.5rem;
     color: #212529;
+    font-family: var(--fuente-titulo, inherit);
 }
 
 .transferencia-subtitulo {
@@ -55,6 +94,14 @@
 
 .transferencia-campo {
     margin-bottom: 1rem;
+}
+
+.transferencia-separador {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin: -0.5rem 0 1rem 0;
+    text-transform: uppercase;
 }
 
 .transferencia-campo label {
@@ -115,16 +162,33 @@
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.transferencia-boton:hover {
+.transferencia-boton:hover:not(:disabled) {
     background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+}
+
+.transferencia-boton:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .transferencia-boton:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+@keyframes transferencia-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive: pantallas móviles */

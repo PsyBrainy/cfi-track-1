@@ -6,29 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnLogin = document.getElementById('btn-login');
   const btnRegister = document.getElementById('btn-register');
   const btnLogout = document.getElementById('btn-logout');
+  const btnWallet = document.getElementById('btn-wallet');
 
-  if(localStorage.getItem('usuarioRegistrado') !== null) {
-    btnLogin.style.display = 'none';
-    btnRegister.style.display = 'none';
-    btnLogout.style.display = 'block';
+  if (localStorage.getItem('token') !== null) {
+    if (btnLogin) btnLogin.style.display = 'none';
+    if (btnRegister) btnRegister.style.display = 'none';
+    if (btnLogout) btnLogout.style.display = 'inline-block';
+    if (btnWallet) btnWallet.style.display = 'inline-block';
   }
 
-  if (btnLogin) {
-    btnLogin.addEventListener('click', function () {
-      window.location.href = 'autenticacion/login.html';
-    });
-  }
-
-  if (btnRegister) {
-    btnRegister.addEventListener('click', function () {
-      window.location.href = 'autenticacion/registro.html';
-    });
-  }
-
-  if(btnLogout) {
+  if (btnLogout) {
     btnLogout.addEventListener('click', function () {
-      localStorage.removeItem('usuarioRegistrado');
+      localStorage.removeItem('token');
       window.location.href = 'autenticacion/login.html';
-    })
+    });
   }
 });
